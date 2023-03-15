@@ -20,6 +20,9 @@ namespace EcoVR
 {
     public partial class Form1 : Form
     {
+        //Файл весов распознавания по лицу
+        private static CascadeClassifier classifier = new CascadeClassifier("haarcascade_frontalface_default.xml");
+
         private VideoCapture capture = null;
 
         private DsDevice[] webCams = null;
@@ -78,6 +81,7 @@ namespace EcoVR
             }
         }
 
+        // Метод создания изображения и отлавливания лиц
         private void Capture_ImageGrabbed(object sender, EventArgs e)
         {
             try
@@ -86,7 +90,24 @@ namespace EcoVR
 
                 capture.Retrieve(m);
 
-                pictureBox1.Image = m.ToImage<Bgr, byte>().Flip(Emgu.CV.CvEnum.FlipType.Horizontal).Bitmap;
+                Bitmap bitmap = m.ToImage<Bgr, byte>().Flip(Emgu.CV.CvEnum.FlipType.Horizontal).Bitmap;
+
+                Image<Bgr, byte> grayImage = m.ToImage<Bgr, byte>().Flip(Emgu.CV.CvEnum.FlipType.Horizontal);
+
+                Rectangle[] faces = classifier.DetectMultiScale(grayImage, 1.4);
+
+                foreach (var face in faces)
+                {
+                    using (Graphics graphics = Graphics.FromImage(bitmap))
+                    {
+                        using (var pen = new Pen(Color.Yellow, 3))
+                        {
+                            graphics.DrawRectangle(pen, face);
+                        }
+                    }
+                }
+
+                pictureBox1.Image = bitmap;
             }
             catch (Exception ex)
             {

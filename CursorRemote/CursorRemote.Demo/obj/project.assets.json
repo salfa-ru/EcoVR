@@ -27,23 +27,23 @@
     ]
   },
   "packageFolders": {
-    "F:\\Users\\mrAbvir\\.nuget\\packages\\": {},
+    "C:\\Users\\lixac\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\Users\\mrAbvir\\Desktop\\ECO\\EcoVR\\CursorRemote\\CursorRemote.Demo\\CursorRemote.Demo.csproj",
+      "projectUniqueName": "F:\\Projects\\EcoVR\\CursorRemote\\CursorRemote.Demo\\CursorRemote.Demo.csproj",
       "projectName": "CursorRemote.Demo",
-      "projectPath": "F:\\Users\\mrAbvir\\Desktop\\ECO\\EcoVR\\CursorRemote\\CursorRemote.Demo\\CursorRemote.Demo.csproj",
-      "packagesPath": "F:\\Users\\mrAbvir\\.nuget\\packages\\",
-      "outputPath": "F:\\Users\\mrAbvir\\Desktop\\ECO\\EcoVR\\CursorRemote\\CursorRemote.Demo\\obj\\",
+      "projectPath": "F:\\Projects\\EcoVR\\CursorRemote\\CursorRemote.Demo\\CursorRemote.Demo.csproj",
+      "packagesPath": "C:\\Users\\lixac\\.nuget\\packages\\",
+      "outputPath": "F:\\Projects\\EcoVR\\CursorRemote\\CursorRemote.Demo\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "F:\\Users\\mrAbvir\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\lixac\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -59,8 +59,8 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "F:\\Users\\mrAbvir\\Desktop\\ECO\\EcoVR\\CursorRemote\\CursorRemote.Library\\CursorRemote.Library.csproj": {
-              "projectPath": "F:\\Users\\mrAbvir\\Desktop\\ECO\\EcoVR\\CursorRemote\\CursorRemote.Library\\CursorRemote.Library.csproj"
+            "F:\\Projects\\EcoVR\\CursorRemote\\CursorRemote.Library\\CursorRemote.Library.csproj": {
+              "projectPath": "F:\\Projects\\EcoVR\\CursorRemote\\CursorRemote.Library\\CursorRemote.Library.csproj"
             }
           }
         }
@@ -90,7 +90,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
       }
     }
   }

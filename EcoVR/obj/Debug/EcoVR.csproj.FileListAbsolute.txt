@@ -41,3 +41,46 @@ D:\VS\All Projects\EcoVR\EcoVR\bin\Debug\sv\ZedGraph.resources.dll
 D:\VS\All Projects\EcoVR\EcoVR\bin\Debug\tr\ZedGraph.resources.dll
 D:\VS\All Projects\EcoVR\EcoVR\bin\Debug\zh-cn\ZedGraph.resources.dll
 D:\VS\All Projects\EcoVR\EcoVR\bin\Debug\zh-tw\ZedGraph.resources.dll
+F:\Projects\EcoVR\EcoVR\obj\Debug\EcoVR.csproj.AssemblyReference.cache
+F:\Projects\EcoVR\EcoVR\obj\Debug\EcoVR.csproj.SuggestedBindingRedirects.cache
+F:\Projects\EcoVR\EcoVR\obj\Debug\EcoVR.Form1.resources
+F:\Projects\EcoVR\EcoVR\obj\Debug\EcoVR.Properties.Resources.resources
+F:\Projects\EcoVR\EcoVR\obj\Debug\EcoVR.csproj.GenerateResource.cache
+F:\Projects\EcoVR\EcoVR\obj\Debug\EcoVR.csproj.CoreCompileInputs.cache
+F:\Projects\EcoVR\EcoVR\obj\Debug\EcoVR.exe
+F:\Projects\EcoVR\EcoVR\obj\Debug\EcoVR.pdb
+F:\Projects\EcoVR\EcoVR\bin\Debug\x64\concrt140.dll
+F:\Projects\EcoVR\EcoVR\bin\Debug\x64\cvextern.dll
+F:\Projects\EcoVR\EcoVR\bin\Debug\x64\msvcp140.dll
+F:\Projects\EcoVR\EcoVR\bin\Debug\x64\opencv_videoio_ffmpeg411_64.dll
+F:\Projects\EcoVR\EcoVR\bin\Debug\x64\vcruntime140.dll
+F:\Projects\EcoVR\EcoVR\bin\Debug\x86\concrt140.dll
+F:\Projects\EcoVR\EcoVR\bin\Debug\x86\cvextern.dll
+F:\Projects\EcoVR\EcoVR\bin\Debug\x86\msvcp140.dll
+F:\Projects\EcoVR\EcoVR\bin\Debug\x86\opencv_videoio_ffmpeg411.dll
+F:\Projects\EcoVR\EcoVR\bin\Debug\x86\vcruntime140.dll
+F:\Projects\EcoVR\EcoVR\bin\Debug\EcoVR.exe.config
+F:\Projects\EcoVR\EcoVR\bin\Debug\EcoVR.exe
+F:\Projects\EcoVR\EcoVR\bin\Debug\EcoVR.pdb
+F:\Projects\EcoVR\EcoVR\bin\Debug\DirectShowLib.dll
+F:\Projects\EcoVR\EcoVR\bin\Debug\Emgu.CV.UI.dll
+F:\Projects\EcoVR\EcoVR\bin\Debug\Emgu.CV.World.dll
+F:\Projects\EcoVR\EcoVR\bin\Debug\ZedGraph.dll
+F:\Projects\EcoVR\EcoVR\bin\Debug\DirectShowLib.pdb
+F:\Projects\EcoVR\EcoVR\bin\Debug\Emgu.CV.UI.xml
+F:\Projects\EcoVR\EcoVR\bin\Debug\Emgu.CV.World.xml
+F:\Projects\EcoVR\EcoVR\bin\Debug\ZedGraph.xml
+F:\Projects\EcoVR\EcoVR\bin\Debug\de\ZedGraph.resources.dll
+F:\Projects\EcoVR\EcoVR\bin\Debug\es\ZedGraph.resources.dll
+F:\Projects\EcoVR\EcoVR\bin\Debug\fr\ZedGraph.resources.dll
+F:\Projects\EcoVR\EcoVR\bin\Debug\hu\ZedGraph.resources.dll
+F:\Projects\EcoVR\EcoVR\bin\Debug\it\ZedGraph.resources.dll
+F:\Projects\EcoVR\EcoVR\bin\Debug\ja\ZedGraph.resources.dll
+F:\Projects\EcoVR\EcoVR\bin\Debug\pt\ZedGraph.resources.dll
+F:\Projects\EcoVR\EcoVR\bin\Debug\ru\ZedGraph.resources.dll
+F:\Projects\EcoVR\EcoVR\bin\Debug\sk\ZedGraph.resources.dll
+F:\Projects\EcoVR\EcoVR\bin\Debug\sv\ZedGraph.resources.dll
+F:\Projects\EcoVR\EcoVR\bin\Debug\tr\ZedGraph.resources.dll
+F:\Projects\EcoVR\EcoVR\bin\Debug\zh-cn\ZedGraph.resources.dll
+F:\Projects\EcoVR\EcoVR\bin\Debug\zh-tw\ZedGraph.resources.dll
+F:\Projects\EcoVR\EcoVR\obj\Debug\EcoVR.csproj.CopyComplete
