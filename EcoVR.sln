@@ -5,6 +5,12 @@ VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcoVR", "EcoVR\EcoVR.csproj", "{DB4226D9-E034-485A-87E7-C22EC2F60CD0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CursorRemote", "CursorRemote", "{454593E8-2150-4FC3-97BC-D4EA0E3F0250}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CursorRemote.Library", "CursorRemote\CursorRemote.Library\CursorRemote.Library.csproj", "{8031F72F-DA05-4C6D-B85B-100A896D294A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CursorRemote.Demo", "CursorRemote\CursorRemote.Demo\CursorRemote.Demo.csproj", "{1C151507-819B-49B6-B26B-924951C4F70B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,11 +27,31 @@ Global
 		{DB4226D9-E034-485A-87E7-C22EC2F60CD0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DB4226D9-E034-485A-87E7-C22EC2F60CD0}.Release|x64.ActiveCfg = Release|Any CPU
 		{DB4226D9-E034-485A-87E7-C22EC2F60CD0}.Release|x64.Build.0 = Release|Any CPU
+		{8031F72F-DA05-4C6D-B85B-100A896D294A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8031F72F-DA05-4C6D-B85B-100A896D294A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8031F72F-DA05-4C6D-B85B-100A896D294A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8031F72F-DA05-4C6D-B85B-100A896D294A}.Debug|x64.Build.0 = Debug|Any CPU
+		{8031F72F-DA05-4C6D-B85B-100A896D294A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8031F72F-DA05-4C6D-B85B-100A896D294A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8031F72F-DA05-4C6D-B85B-100A896D294A}.Release|x64.ActiveCfg = Release|Any CPU
+		{8031F72F-DA05-4C6D-B85B-100A896D294A}.Release|x64.Build.0 = Release|Any CPU
+		{1C151507-819B-49B6-B26B-924951C4F70B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C151507-819B-49B6-B26B-924951C4F70B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C151507-819B-49B6-B26B-924951C4F70B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1C151507-819B-49B6-B26B-924951C4F70B}.Debug|x64.Build.0 = Debug|Any CPU
+		{1C151507-819B-49B6-B26B-924951C4F70B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C151507-819B-49B6-B26B-924951C4F70B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C151507-819B-49B6-B26B-924951C4F70B}.Release|x64.ActiveCfg = Release|Any CPU
+		{1C151507-819B-49B6-B26B-924951C4F70B}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2E3A9E28-64F0-437D-BD97-9E27936CC5F9}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8031F72F-DA05-4C6D-B85B-100A896D294A} = {454593E8-2150-4FC3-97BC-D4EA0E3F0250}
+		{1C151507-819B-49B6-B26B-924951C4F70B} = {454593E8-2150-4FC3-97BC-D4EA0E3F0250}
 	EndGlobalSection
 EndGlobal
