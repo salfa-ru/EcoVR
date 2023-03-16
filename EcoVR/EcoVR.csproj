@@ -115,6 +115,12 @@
     <Content Include="haarcascade_frontalface_default.xml" />
     <Content Include="License-LGPL.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CursorRemote.LibraryNet\CursorRemote.LibraryNet.csproj">
+      <Project>{6edf5e6a-b410-4391-b70f-fdfa6915f1ea}</Project>
+      <Name>CursorRemote.LibraryNet</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\EMGU.CV.4.1.1.3497\build\EMGU.CV.targets" Condition="Exists('..\packages\EMGU.CV.4.1.1.3497\build\EMGU.CV.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -1,18 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using CursorRemote.Library;
 
-using Emgu;
 using Emgu.CV;
-using Emgu.CV.Util;
 using Emgu.CV.Structure;
-using Emgu.Util;
 
 using DirectShowLib;
 
@@ -20,6 +12,8 @@ namespace EcoVR
 {
     public partial class Form1 : Form
     {
+        private CursorApi api = new CursorApi();
+        
         //Файл весов распознавания по лицу
         private static CascadeClassifier classifier = new CascadeClassifier("haarcascade_frontalface_default.xml");
 
@@ -96,13 +90,26 @@ namespace EcoVR
 
                 Rectangle[] faces = classifier.DetectMultiScale(grayImage, 1.4);
 
-                foreach (var face in faces)
+                int width = bitmap.Width;
+                int height = bitmap.Height;
+
+                if (faces.Length > 0)
                 {
+                    var face = faces[0];
                     using (Graphics graphics = Graphics.FromImage(bitmap))
                     {
                         using (var pen = new Pen(Color.Yellow, 3))
-                        {
-                            graphics.DrawRectangle(pen, face);
+                        {                          
+                            int x = face.X + (face.Width) / 2;
+                            int y = face.Y + (face.Height) / 2;
+
+                            graphics.DrawEllipse(pen, x, y, 10, 10);
+                            
+                            double targetX = mouseSensHor.Value * (double)face.X / (double)width;
+                            double targetY = mouseSensVert.Value * (double)face.Y / (double)Height;
+
+                            api.MoveRelative(targetX, targetY);
+                            this.Text = $"{targetX} {targetY}";
                         }
                     }
                 }
@@ -158,6 +165,12 @@ namespace EcoVR
         private void выходToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            capture.Stop();
+            capture.Dispose();
         }
     }
 }

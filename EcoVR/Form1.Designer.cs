@@ -40,9 +40,15 @@
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
+            this.mouseSensHor = new System.Windows.Forms.TrackBar();
+            this.mouseSensVert = new System.Windows.Forms.TrackBar();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.mouseSensHor)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mouseSensVert)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -77,7 +83,7 @@
             // выходToolStripMenuItem
             // 
             this.выходToolStripMenuItem.Name = "выходToolStripMenuItem";
-            this.выходToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.выходToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
             this.выходToolStripMenuItem.Text = "Выход";
             this.выходToolStripMenuItem.Click += new System.EventHandler(this.выходToolStripMenuItem_Click);
             // 
@@ -143,11 +149,50 @@
             this.toolStripButton3.Text = "Стоп";
             this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
             // 
+            // mouseSensHor
+            // 
+            this.mouseSensHor.Location = new System.Drawing.Point(428, 24);
+            this.mouseSensHor.Name = "mouseSensHor";
+            this.mouseSensHor.Size = new System.Drawing.Size(104, 45);
+            this.mouseSensHor.TabIndex = 3;
+            this.mouseSensHor.Value = 3;
+            // 
+            // mouseSensVert
+            // 
+            this.mouseSensVert.Location = new System.Drawing.Point(596, 24);
+            this.mouseSensVert.Minimum = 1;
+            this.mouseSensVert.Name = "mouseSensVert";
+            this.mouseSensVert.Size = new System.Drawing.Size(104, 45);
+            this.mouseSensVert.TabIndex = 4;
+            this.mouseSensVert.Value = 3;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(371, 24);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(61, 20);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "Sens X";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(539, 24);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(61, 20);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "Sens Y";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1200, 692);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.mouseSensVert);
+            this.Controls.Add(this.mouseSensHor);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.menuStrip1);
@@ -157,12 +202,15 @@
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "Form1";
             this.Text = "EcoVR";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.mouseSensHor)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mouseSensVert)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -181,6 +229,10 @@
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
         private System.Windows.Forms.ToolStripButton toolStripButton3;
+        private System.Windows.Forms.TrackBar mouseSensHor;
+        private System.Windows.Forms.TrackBar mouseSensVert;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
     }
 }
 
