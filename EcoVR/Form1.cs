@@ -7,13 +7,29 @@ using Emgu.CV;
 using Emgu.CV.Structure;
 
 using DirectShowLib;
+using Emgu.CV.Face;
 
 namespace EcoVR
 {
     public partial class Form1 : Form
     {
+        // Позиции лица
+        private int positionFaceX = 0;
+        private int positionFaceY = 0;
+        private int newPositionFaceX = 0;
+        private int newPositionFaceY = 0;
+
+        // Значение смещения положения мыши
+        private int mouseOffset = 5;
+
+        // Значения границ смещения лица
+        private int offsetX = 30;
+        private int offsetY = 25;
+
+        private int startTimer = 100;
+
         private CursorApi api = new CursorApi();
-        
+
         //Файл весов распознавания по лицу
         private static CascadeClassifier classifier = new CascadeClassifier("haarcascade_frontalface_default.xml");
 
@@ -27,7 +43,6 @@ namespace EcoVR
             InitializeComponent();
         }
 
-        // загрузка формы
         private void Form1_Load(object sender, EventArgs e)
         {
             webCams = DsDevice.GetDevicesOfCat(FilterCategory.VideoInputDevice);
@@ -43,20 +58,19 @@ namespace EcoVR
             selectedCameraId = toolStripComboBox1.SelectedIndex;
         }
 
-        // смотреть
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             try
             {
-                if(webCams.Length == 0)
+                if (webCams.Length == 0)
                 {
                     throw new Exception("Нет доступных камер!");
                 }
-                else if(toolStripComboBox1.SelectedItem == null)
+                else if (toolStripComboBox1.SelectedItem == null)
                 {
                     throw new Exception("Необходимо выбрать камеру!");
                 }
-                else if(capture != null)
+                else if (capture != null)
                 {
                     capture.Start();
                 }
@@ -90,31 +104,59 @@ namespace EcoVR
 
                 Rectangle[] faces = classifier.DetectMultiScale(grayImage, 1.4);
 
-                int width = bitmap.Width;
-                int height = bitmap.Height;
-
-                if (faces.Length > 0)
+                foreach (var face in faces)
                 {
-                    var face = faces[0];
                     using (Graphics graphics = Graphics.FromImage(bitmap))
                     {
                         using (var pen = new Pen(Color.Yellow, 3))
-                        {                          
-                            int x = face.X + (face.Width) / 2;
-                            int y = face.Y + (face.Height) / 2;
-
-                            graphics.DrawEllipse(pen, x, y, 10, 10);
-                            
-                            double targetX = mouseSensHor.Value * (double)face.X / (double)width;
-                            double targetY = mouseSensVert.Value * (double)face.Y / (double)Height;
-
-                            api.MoveRelative(targetX, targetY);
-                            this.Text = $"{targetX} {targetY}";
+                        {
+                            graphics.DrawRectangle(pen, face);
+                            graphics.DrawEllipse(pen, face.X + face.Width / 2, face.Y + face.Height / 2, 10, 10);
                         }
                     }
+                    // Проверяем есть ли начальные значения положения лица
+                    if (positionFaceX == 0 && positionFaceY == 0)
+                    {
+                        positionFaceX = face.X + face.Height / 2;
+                        positionFaceY = face.Y;
+                        api.MoveRelative(0.4, 0.4);
+                    }
+                    else
+                    {
+                        newPositionFaceX = face.X + face.Height / 2;
+                        newPositionFaceY = face.Y;
+                        if (newPositionFaceX > positionFaceX + offsetX)
+                        {
+                            api.Move(api.X + mouseOffset, api.Y);
+                            startTimer = 100;
+                        }
+                        if (newPositionFaceX < positionFaceX - offsetX)
+                        {
+                            api.Move(api.X - mouseOffset, api.Y);
+                            startTimer = 100;
+                        }
+                        if (newPositionFaceY > positionFaceY + offsetY)
+                        {
+                            api.Move(api.X, api.Y + mouseOffset);
+                            startTimer = 100;
+                        }
+                        if (newPositionFaceY < positionFaceY - offsetY)
+                        {
+                            api.Move(api.X, api.Y - mouseOffset);
+                            startTimer = 100;
+                        }
+                    }
+                    Console.WriteLine(startTimer--);
+                    if (startTimer == 0)
+                    {
+                        api.SetMouseLeftClick();
+                    }
+                    Console.WriteLine($"X = {newPositionFaceX}");
+                    Console.WriteLine($"Y = {newPositionFaceY}");
                 }
 
                 pictureBox1.Image = bitmap;
+
             }
             catch (Exception ex)
             {
@@ -152,7 +194,7 @@ namespace EcoVR
                     pictureBox1.Image.Dispose();
 
                     pictureBox1.Image = null;
-                    
+
                     selectedCameraId = 0;
                 }
             }

@@ -84,3 +84,5 @@ F:\Projects\EcoVR\EcoVR\bin\Debug\tr\ZedGraph.resources.dll
 F:\Projects\EcoVR\EcoVR\bin\Debug\zh-cn\ZedGraph.resources.dll
 F:\Projects\EcoVR\EcoVR\bin\Debug\zh-tw\ZedGraph.resources.dll
 F:\Projects\EcoVR\EcoVR\obj\Debug\EcoVR.csproj.CopyComplete
+F:\Projects\EcoVR\EcoVR\bin\Debug\CursorRemote.LibraryNet.dll
+F:\Projects\EcoVR\EcoVR\bin\Debug\CursorRemote.LibraryNet.pdb
