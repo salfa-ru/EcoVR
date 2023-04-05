@@ -1,0 +1,141 @@
+﻿<Window x:Class="HandControl.App.Windows.ControlWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HandControl.App.Windows"
+        mc:Ignorable="d"
+        Title="Панель управления"
+        Width="600"
+        ResizeMode="NoResize"
+        Closing="Window_Closing"
+        WindowStyle="ToolWindow"
+       >
+    
+    <Grid Margin ="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="0.5*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <GroupBox x:Name="stConfig" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Header="{Binding Title}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Column="0" Margin ="5" Text="{Binding State}"/>
+            </Grid>
+        </GroupBox>
+        <StackPanel Grid.Column="0" Grid.Row="1">
+            <GroupBox x:Name="camConfig" Header="{Binding Title}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Margin="5" Grid.RowSpan="2">Камера:</TextBlock>
+                    <TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Margin="5" Grid.RowSpan="2">Разрешение:</TextBlock>
+                    <ComboBox  Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="4" Margin="5" ItemsSource="{Binding CamerasNames}" SelectedIndex="{Binding Index}"/>
+                    <ComboBox  Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="4" Margin="5" ItemsSource="{Binding Resolutions}" SelectedIndex="{Binding SelectedResolution}"/>
+                    <Button    Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Margin="5" Content="Старт" Command="{Binding StartCapturingCommand}" IsEnabled="{Binding IsCanStart}"/>
+                    <Button    Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="2" Margin="5" Content="Применить" Command="{Binding RestartCapturingCommand}" IsEnabled="{Binding IsCanStop}"/>
+                    <Button    Grid.Column="4" Grid.Row="2" Grid.ColumnSpan="2" Margin="5" Content="Стоп" Command="{Binding StopCapturingCommand}" IsEnabled="{Binding IsCanRestart}"/>
+                </Grid>
+            </GroupBox>                       
+            <GroupBox x:Name="frConfig"  Header="{Binding Title}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="0.8*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Column="0" Grid.Row="0" Margin ="5" >Показать окно:</TextBlock>
+                    <TextBlock Grid.Column="0" Grid.Row="1" Margin ="5" >Зеркало:</TextBlock>
+                    <TextBlock Grid.Column="0" Grid.Row="2" Margin ="5" >Детектирование:</TextBlock>
+                    <CheckBox  Grid.Column="1" Grid.Row="0" Margin ="5" IsChecked="{Binding IsPreview}"/>
+                    <CheckBox  Grid.Column="1" Grid.Row="1" Margin ="5" IsChecked="{Binding IsFlip}"/>
+                    <CheckBox  Grid.Column="1" Grid.Row="2" Margin ="5" IsChecked="{Binding IsDetect}"/>
+                    <Button    Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Margin="5" Content="Применить" Command="{Binding Command}"/>
+                </Grid>
+            </GroupBox>
+
+            <GroupBox x:Name="remCapture" Header="{Binding Title}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock  Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Margin="5">Получение данных:</TextBlock>
+                    <Button     Grid.Column="0" Grid.Row="1" Margin="5" Content="Запустить" Command="{Binding StartDataSendingCommand}"/>
+                    <Button     Grid.Column="1" Grid.Row="1" Margin="5" Content="Остановить" Command="{Binding StopDataSendingCommand}"/>
+                </Grid>
+            </GroupBox>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Grid.Row="1"> 
+            <GroupBox x:Name="sensConfig"  Header="{Binding Title}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="70"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0"  Grid.Column="0" Margin ="5" Grid.ColumnSpan="2" Text="Зона не чувствительности:"/>
+                    <TextBlock Grid.Row="1"  Grid.Column="0" Margin ="5" Text="Горизонтальная (0.1 - 0.9): "/>
+                    <TextBox   Grid.Row="1"  Grid.Column="1" Margin ="5" Text="{Binding NonsensitiveZoneHorizontalValue}"/>
+                    <TextBlock Grid.Row="2"  Grid.Column="0" Margin ="5" Text="Вертикальная (0.1 - 0.9): "/>
+                    <TextBox   Grid.Row="2"  Grid.Column="1" Margin ="5" Text="{Binding NonsensitiveZoneVerticalValue}"/>
+                    <TextBlock Grid.Row="3"  Grid.Column="0" Margin ="5" Grid.ColumnSpan="2" Text="Смещение зоны нечувствительности:"/>
+                    <TextBlock Grid.Row="4"  Grid.Column="0" Margin ="5" Text="Горизонтальное (-0.2 - 0,2): "/>
+                    <TextBox   Grid.Row="4"  Grid.Column="1" Margin ="5" Text="{Binding HorizontalOffset}"/>
+                    <TextBlock Grid.Row="5"  Grid.Column="0" Margin ="5" Text="Вертикальное (-0.2 - 0,2): "/>
+                    <TextBox   Grid.Row="5"  Grid.Column="1" Margin ="5" Text="{Binding VerticalOffset}"/>
+                    <TextBlock Grid.Row="9"  Grid.Column="0" Margin ="5" Grid.ColumnSpan="2" Text="Зона сработки кнопок:"/>
+                    <TextBlock Grid.Row="10" Grid.Column="0" Margin ="5" Text="Левой кнопки (0.0 - 0,5): "/>
+                    <TextBox   Grid.Row="10" Grid.Column="1" Margin ="5" Text="{Binding ActivationLeftMouseZone}"/>
+                    <TextBlock Grid.Row="11" Grid.Column="0" Margin ="5" Text="Правой кнопки (0.0 - 0,5): "/>
+                    <TextBox   Grid.Row="11" Grid.Column="1" Margin ="5" Text="{Binding ActivationRightMouseZone}"/>
+                </Grid>
+            </GroupBox>
+        </StackPanel>
+    </Grid>
+</Window>
