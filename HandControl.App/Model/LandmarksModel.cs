@@ -32,6 +32,8 @@ public class LandmarksModel
     public PointF PinkyDip => GetLandmark(19);
     public PointF PinkyTip => GetLandmark(20);
 
+    private DateTime _lastUpdateTime = DateTime.MinValue;
+    public bool IsNew => (DateTime.Now - _lastUpdateTime).TotalMilliseconds < 500;
     private PointF GetLandmark(int index) => _landmarks[index];
 
     public LandmarksModel()
@@ -42,6 +44,7 @@ public class LandmarksModel
             if (lm.Hand != null)
                 _landmarks = lm.Hand.Points.Select(p => p).ToList();
             OnDataChanged?.Invoke(this, EventArgs.Empty);
+            _lastUpdateTime = DateTime.Now;
         };
     }
 }

@@ -27,9 +27,18 @@ namespace HandControl.App
 
         private void StartInit()
         {
+
+            System.Windows.Forms.ToolStripMenuItem item = new System.Windows.Forms.ToolStripMenuItem("Exit");
+            item.Click += (s, e) => { 
+                this.Close();
+            };
+             this.ShowInTaskbar = false;
+
             _icon = new System.Windows.Forms.NotifyIcon();
             _icon.Icon = new System.Drawing.Icon(Defaults.Constants.TRAY_ICON_PATH);
             _icon.Visible = true;
+            _icon.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
+            _icon.ContextMenuStrip.Items.Add(item);
             _icon.DoubleClick += (sender, args) => _window?.Show();
             this.WindowStyle = WindowStyle.None;
             this.AllowsTransparency = true;
@@ -47,7 +56,7 @@ namespace HandControl.App
             SingleManager.ConversationManager.CommandCreate();
             if (_window == null)
                 _window = new ControlWindow();
-            _window.Show();
+           
         }
 
         private void Window_Closed(object sender, System.EventArgs e)

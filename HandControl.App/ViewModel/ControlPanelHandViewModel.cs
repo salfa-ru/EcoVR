@@ -77,4 +77,49 @@ public class ControlPanelHandViewModel : ControlPanelBaseViewModel
             OnPropertyChanged(nameof(ActivationRightMouseZone));
         }
     }
+
+    [RangeFloat(0.1F, 1.0F)]
+    public float AccelerateX
+    {
+        get => _controller.StepX;
+        set
+        {
+            _controller.StepX = value;
+            OnPropertyChanged(nameof(AccelerateX));
+        }
+    }
+
+    [RangeFloat(0.1F, 1.0F)]
+    public float AccelerateY
+    {
+        get => _controller.StepY;
+        set
+        {
+            _controller.StepY = value;
+            OnPropertyChanged(nameof(AccelerateY));
+        }
+    }
+
+    [RangeFloat(10F, 100F)]
+    public float SpeedLimitX
+    {
+        get => _controller.LimitX;
+        set
+        {
+            _controller.LimitX = value;
+            OnPropertyChanged(nameof(SpeedLimitX));
+        }
+    }
+
+    [RangeFloat(10F, 100F)]
+    public float SpeedLimitY
+    {
+        get => _controller.LimitY;
+        set
+        {
+            _controller.LimitY = value;
+            OnPropertyChanged(nameof(SpeedLimitY));
+        }
+    }
+
 }

@@ -75,7 +75,7 @@
                     <CheckBox  Grid.Column="1" Grid.Row="0" Margin ="5" IsChecked="{Binding IsPreview}"/>
                     <CheckBox  Grid.Column="1" Grid.Row="1" Margin ="5" IsChecked="{Binding IsFlip}"/>
                     <CheckBox  Grid.Column="1" Grid.Row="2" Margin ="5" IsChecked="{Binding IsDetect}"/>
-                    <Button    Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Margin="5" Content="Применить" Command="{Binding Command}"/>
+                    <Button    Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Margin="5" Content="Применить" Command="{Binding FrameCommand}"/>
                 </Grid>
             </GroupBox>
 
@@ -96,45 +96,94 @@
             </GroupBox>
         </StackPanel>
 
-        <StackPanel Grid.Column="1" Grid.Row="1"> 
+        <StackPanel Grid.Column="1" Grid.Row="1">
             <GroupBox x:Name="sensConfig"  Header="{Binding Title}">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition Width="70"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0"  Grid.Column="0" Margin ="5" Grid.ColumnSpan="2" Text="Зона не чувствительности:"/>
-                    <TextBlock Grid.Row="1"  Grid.Column="0" Margin ="5" Text="Горизонтальная (0.1 - 0.9): "/>
-                    <TextBox   Grid.Row="1"  Grid.Column="1" Margin ="5" Text="{Binding NonsensitiveZoneHorizontalValue}"/>
-                    <TextBlock Grid.Row="2"  Grid.Column="0" Margin ="5" Text="Вертикальная (0.1 - 0.9): "/>
-                    <TextBox   Grid.Row="2"  Grid.Column="1" Margin ="5" Text="{Binding NonsensitiveZoneVerticalValue}"/>
-                    <TextBlock Grid.Row="3"  Grid.Column="0" Margin ="5" Grid.ColumnSpan="2" Text="Смещение зоны нечувствительности:"/>
-                    <TextBlock Grid.Row="4"  Grid.Column="0" Margin ="5" Text="Горизонтальное (-0.2 - 0,2): "/>
-                    <TextBox   Grid.Row="4"  Grid.Column="1" Margin ="5" Text="{Binding HorizontalOffset}"/>
-                    <TextBlock Grid.Row="5"  Grid.Column="0" Margin ="5" Text="Вертикальное (-0.2 - 0,2): "/>
-                    <TextBox   Grid.Row="5"  Grid.Column="1" Margin ="5" Text="{Binding VerticalOffset}"/>
-                    <TextBlock Grid.Row="9"  Grid.Column="0" Margin ="5" Grid.ColumnSpan="2" Text="Зона сработки кнопок:"/>
-                    <TextBlock Grid.Row="10" Grid.Column="0" Margin ="5" Text="Левой кнопки (0.0 - 0,5): "/>
-                    <TextBox   Grid.Row="10" Grid.Column="1" Margin ="5" Text="{Binding ActivationLeftMouseZone}"/>
-                    <TextBlock Grid.Row="11" Grid.Column="0" Margin ="5" Text="Правой кнопки (0.0 - 0,5): "/>
-                    <TextBox   Grid.Row="11" Grid.Column="1" Margin ="5" Text="{Binding ActivationRightMouseZone}"/>
-                </Grid>
+                <StackPanel>
+                    <GroupBox Header="Зона не чувствительности:" Margin ="5" >
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="0.3*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0"  Grid.Column="0" Margin ="5" Text="Горизонтальная (0.1 - 0.9): "/>
+                            <TextBox   Grid.Row="0"  Grid.Column="1" Margin ="5" Text="{Binding NonsensitiveZoneHorizontalValue}"/>
+                            <TextBlock Grid.Row="1"  Grid.Column="0" Margin ="5" Text="Вертикальная (0.1 - 0.9): "/>
+                            <TextBox   Grid.Row="1"  Grid.Column="1" Margin ="5" Text="{Binding NonsensitiveZoneVerticalValue}"/>
+                        </Grid>
+                    </GroupBox>
+
+                    <GroupBox Header="Смещение зоны нечувствительности:" Margin ="5" >
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="0.3*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0"  Grid.Column="0" Margin ="5" Text="Горизонтальное (-0.2 - 0,2): "/>
+                            <TextBox   Grid.Row="0"  Grid.Column="1" Margin ="5" Text="{Binding HorizontalOffset}"/>
+                            <TextBlock Grid.Row="1"  Grid.Column="0" Margin ="5" Text="Вертикальное (-0.2 - 0,2): "/>
+                            <TextBox   Grid.Row="1"  Grid.Column="1" Margin ="5" Text="{Binding VerticalOffset}"/>
+                        </Grid>
+                    </GroupBox>
+
+                    <GroupBox Header="Зона сработки кнопок:" Margin ="5" >
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="0.3*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Margin ="5" Text="Левой кнопки (0.0 - 0,5): "/>
+                            <TextBox   Grid.Row="0" Grid.Column="1" Margin ="5" Text="{Binding ActivationLeftMouseZone}"/>
+                            <TextBlock Grid.Row="1" Grid.Column="0" Margin ="5" Text="Правой кнопки (0.0 - 0,5): "/>
+                            <TextBox   Grid.Row="1" Grid.Column="1" Margin ="5" Text="{Binding ActivationRightMouseZone}"/>
+                        </Grid>
+                    </GroupBox>
+
+                    <GroupBox Header="Ускорение курсора:" Margin ="5" >
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="0.3*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Margin ="5" Text="Горизонтальное (0.1 - 1,0): "/>
+                            <TextBox   Grid.Row="0" Grid.Column="1" Margin ="5" Text="{Binding AccelerateX}"/>
+                            <TextBlock Grid.Row="1" Grid.Column="0" Margin ="5" Text="Вертикальное (0.1 - 1,0): "/>
+                            <TextBox   Grid.Row="1" Grid.Column="1" Margin ="5" Text="{Binding AccelerateY}"/>
+                        </Grid>
+                    </GroupBox>
+
+                    <GroupBox Header="Лимит скорости:" Margin ="5" >
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="0.3*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Margin ="5" Text="Горизонтальный (10 - 50): "/>
+                            <TextBox   Grid.Row="0" Grid.Column="1" Margin ="5" Text="{Binding SpeedLimitX}"/>
+                            <TextBlock Grid.Row="1" Grid.Column="0" Margin ="5" Text="Вертикальный (10 - 50): "/>
+                            <TextBox   Grid.Row="1" Grid.Column="1" Margin ="5" Text="{Binding SpeedLimitY}"/>
+                        </Grid>
+                    </GroupBox>
+                </StackPanel>
             </GroupBox>
         </StackPanel>
     </Grid>

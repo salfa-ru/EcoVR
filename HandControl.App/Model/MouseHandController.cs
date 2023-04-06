@@ -8,7 +8,7 @@ namespace HandControl.App.Model;
 public class MouseHandController
 {
     private const double HISTEREZIS = 0.1;
-    private const int DELAY = 9;
+    private const int DELAY = 10;
     private CursorApi _cursor;
     private LandmarksModel _landmarks;
     private bool mouseLeftDownTrigger = false;
@@ -34,7 +34,7 @@ public class MouseHandController
 
     [RangeFloat(0.0F, 0.5F)]
     public float ActivationRightMouseZone { get; set; } = 0.3F;
-    public bool IsRemote{ get; set; }
+    
 
     [RangeFloat(0.1f, 1)]
     public float StepX { get; set; } = 0.5F;
@@ -53,7 +53,7 @@ public class MouseHandController
         get => isMoveLeft;
         private set
         {
-            if (isMoveLeft != value)
+            if (isMoveLeft != value && IsAngleRight && _landmarks.IsNew)
             {
                 isMoveLeft = value;
             }
@@ -64,7 +64,7 @@ public class MouseHandController
         get => isMoveRight;
         private set
         {
-            if (isMoveRight != value)
+            if (isMoveRight != value && IsAngleRight && _landmarks.IsNew)
             {
                 isMoveRight = value;
             }
@@ -75,7 +75,7 @@ public class MouseHandController
         get => isMoveUp;
         private set
         {
-            if (isMoveUp != value)
+            if (isMoveUp != value && IsAngleRight && _landmarks.IsNew)
             {
                 isMoveUp = value;
             }
@@ -86,7 +86,7 @@ public class MouseHandController
         get => isMoveDown;
         private set
         {
-            if (isMoveDown != value)
+            if (isMoveDown != value && IsAngleRight && _landmarks.IsNew)
             {
                 isMoveDown = value;
             }
@@ -97,7 +97,7 @@ public class MouseHandController
         get => mouseLeftDownTrigger;
         private set
         {
-            if (mouseLeftDownTrigger != value)
+            if (mouseLeftDownTrigger != value && IsAngleRight && _landmarks.IsNew)
             {
                 mouseLeftDownTrigger = value;
                 if (mouseLeftDownTrigger) _cursor.SetMouseLeftDown();
@@ -110,7 +110,7 @@ public class MouseHandController
         get => mouseRightDownTrigger;
         private set
         {
-            if (mouseRightDownTrigger != value)
+            if (mouseRightDownTrigger != value && IsAngleRight && _landmarks.IsNew)
             {
                 mouseRightDownTrigger = value;
                 if (mouseRightDownTrigger) _cursor.SetMouseRightDown();
@@ -118,6 +118,8 @@ public class MouseHandController
             }
         }
     }
+
+    public bool IsAngleRight { get; private set; }
 
     public MouseHandController()
     {
@@ -127,7 +129,7 @@ public class MouseHandController
         Task.Run(CursorMover());
         _landmarks.OnDataChanged += (s, a) =>
         {
-            IsRemote = CheckAngle(_landmarks.IndexMcp, _landmarks.PinkyMcp, _landmarks.Wrist);
+            IsAngleRight = CheckAngle(_landmarks.IndexMcp, _landmarks.PinkyMcp, _landmarks.Wrist);
             MoveVertical(_landmarks.MiddleTip, _landmarks.MiddlePip);
             MoveHorizontal(_landmarks.ThumbTip, _landmarks.ThumbMcp);
             TriggerLeftMouse(_landmarks.ThumbTip, _landmarks.IndexTip);
@@ -144,8 +146,11 @@ public class MouseHandController
             {
                 await Task.Delay(DELAY);
 
-                if (IsRemote)
-                {
+                
+                //&& SingleManager.StatusData.State == ReceivedDataHandlers.StatusState.Captured;
+                
+                if (IsAngleRight && _landmarks.IsNew)
+                {            
                     if (IsMoveRight)
                     {
                         if (speedX < 0) speedX = 0;

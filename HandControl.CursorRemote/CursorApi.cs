@@ -81,8 +81,8 @@ public class CursorApi
         private set
         {
             if (value < 0) _x = 0;
-            if (value > ScreenWidth) _x = ScreenWidth;
-            _x = value;
+            else if (value > ScreenWidth) _x = ScreenWidth;
+            else _x = value;
             OnMouseMoveEvent?.Invoke(this, new MouseEventMoveArgs() { X = _x, Y = _y });
         }
     }
@@ -96,8 +96,8 @@ public class CursorApi
         private set
         {
             if (value < 0) _y = 0;
-            if (value > ScreenHeight) _y = ScreenHeight;           
-            _y = value;
+            else if (value > ScreenHeight) _y = ScreenHeight;           
+            else _y = value;
             OnMouseMoveEvent?.Invoke(this, new MouseEventMoveArgs() { X = _x, Y = _y });
         }
     }
