@@ -1,0 +1,1 @@
+{"UdpConfig":{"HostName":"localhost","PortIn":6001,"PortOut":6000},"ResolutionConfig":{"Index":1,"Width":640,"Height":480},"DetectorConfig":{"MaxHands":1,"Detection":0.800000011920929},"FrameConfig":{"IsDetect":true,"IsFlip":false,"IsPreview":false}}
