@@ -24,6 +24,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Controls\ScrollSettingsControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="detector\CaptureModule.py">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

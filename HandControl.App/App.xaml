@@ -4,6 +4,18 @@
              xmlns:local="clr-namespace:HandControl.App"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="source/StringResourceDictionary.xaml"/>
+                <ResourceDictionary Source="source/ColorResourcesDictionary.xaml"/>
+                <ResourceDictionary Source="source/BrushResourcesDictionary.xaml"/>
+                <ResourceDictionary Source="source/TextBlockStyle.xaml"/>
+                <ResourceDictionary Source="source/ButtonStyle.xaml"/>
+                <ResourceDictionary Source="source/TabsStyle.xaml"/>
+                <ResourceDictionary Source="source/GroupBoxStyle.xaml"/>
+                <ResourceDictionary Source="source/ComboBoxStyle.xaml"/>
+                <ResourceDictionary Source="source/CheckBoxStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -1,7 +1,9 @@
 ﻿using HandControl.CursorRemote;
 using System;
 using System.Drawing;
+using System.Linq;
 using System.Threading.Tasks;
+
 
 namespace HandControl.App.Model;
 
@@ -19,37 +21,56 @@ public class MouseHandController
     private bool isMoveDown = false;
     private float speedX = 0f;
     private float speedY = 0f;
-    public float ControllMeassure => GetDistance(_landmarks.Wrist, _landmarks.IndexMcp);
-    [RangeFloat(0.1F, 0.9F)]
-    public float NonsensitiveZoneVerticalValue { get; set; } = 0.2F;
-    [RangeFloat(0.1F, 0.9F)]
-    public float NonsensitiveZoneHorizontalValue { get; set; } = 0.15F;
-    [RangeFloat(0.7F, 4.0F)]
-    public float HorizontalOffset { get; set; } = -0.1F;
-    [RangeFloat(-0.2F, 0.2F)]
-    public float VerticalOffset { get; set; } = 0.0F;
-
-    [RangeFloat(0.1F, 0.5F)]
+    private float speedScroll = 0f;
+    private bool isScrollUp = false;
+    private bool isScrollDown = false;
+   
+    [Range<float>(0.1F, 0.9F)]
+    public float VerticalNonSensitiveZone { get; set; } = 0.2F;
+    [Range<float>(0.1F, 0.9F)]
+    public float HorizontalNonSensitiveZone { get; set; } = 0.2F;
+    [Range<float>(0.1F, 0.9F)]
+    public float ScrollNonsensitiveZone { get; set; } = 0.2F;
+    
+    [Range<float>(0.1F, 0.5F)]
     public float ActivationLeftMouseZone { get; set; } = 0.4F;
 
-    [RangeFloat(0.0F, 0.5F)]
+    [Range<float>(0.0F, 0.5F)]
     public float ActivationRightMouseZone { get; set; } = 0.3F;
-    
 
-    [RangeFloat(0.1f, 1)]
-    public float StepX { get; set; } = 0.5F;
 
-    [RangeFloat(0.1f, 1)]
-    public float StepY { get; set; } = 0.5F;
+    [Range<float>(0.7F, 4.0F)]
+    public float HorizontalOffset { get; set; } = -0.1F;
+    [Range<float>(-0.2F, 0.2F)]
+    public float VerticalOffset { get; set; } = 0.0F;
+    [Range<float>(-0.2F, 0.2F)]
+    public float ScrollOffset { get; set; } = 0.0F;
 
-    [RangeFloat(10, 100)]
-    public float LimitX { get; set; } = 50F;
 
-    [RangeFloat(10, 100)]
-    public float LimitY { get; set; } = 50F;
+    [Range<float>(0.1f, 1)]
+    public float HorizontalAcseleration { get; set; } = 0.5F;
+
+    [Range<float>(0.1f, 1)]
+    public float VerticalAcseleration { get; set; } = 0.5F;
+
+    [Range<float>(0.5f, 5)]
+    public float ScrollAcseleration { get; set; } = 1F;
+
+
+    [Range<float>(50, 200)]
+    public float ScrollLimitSpeed { get; set; } = 100F;
+
+    [Range<float>(10, 100)]
+    public float HorizontalLimitSpeed { get; set; } = 50F;
+
+    [Range<float>(10, 100)]
+    public float VerticalLimitSpeed { get; set; } = 50F;
+
 
     public event EventHandler? OnMouseHandStateChanged;
-    public bool IsMoveLeft {
+   
+    public bool IsMoveLeft
+    {
         get => isMoveLeft;
         private set
         {
@@ -118,27 +139,64 @@ public class MouseHandController
             }
         }
     }
-
-    public bool IsAngleRight { get; private set; }
+    public bool IsScrollUp 
+    { 
+        get => isScrollUp;
+        private set { if (IsAngleRight && _landmarks.IsNew) isScrollUp = value; }
+    }
+    public bool IsScrollDown 
+    { 
+        get => isScrollDown;
+        private set { if (IsAngleRight && _landmarks.IsNew) isScrollDown = value; } 
+    }
 
     public MouseHandController()
     {
         _cursor = SingleManager.CursorApi;
         _cursor.MoveRelative(0.5, 0.5);
         _landmarks = SingleManager.LandmarksModel;
-        Task.Run(CursorMover());
+        Task.Run(Mover());
+        Task.Run(Scroller());
         _landmarks.OnDataChanged += (s, a) =>
         {
-            IsAngleRight = CheckAngle(_landmarks.IndexMcp, _landmarks.PinkyMcp, _landmarks.Wrist);
-            MoveVertical(_landmarks.MiddleTip, _landmarks.MiddlePip);
-            MoveHorizontal(_landmarks.ThumbTip, _landmarks.ThumbMcp);
-            TriggerLeftMouse(_landmarks.ThumbTip, _landmarks.IndexTip);
-            TriggerRightMouse(_landmarks.RingTip, _landmarks.ThumbTip);
+            IsAngleRight = CheckAngle(_landmarks.IndexMcp.Point, _landmarks.PinkyMcp.Point, _landmarks.Wrist.Point);
+            MoveVertical();
+            MoveHorizontal();
+            TriggerLeftMouse();
+            TriggerRightMouse();
+            Scrolling();
             OnMouseHandStateChanged?.Invoke(this, EventArgs.Empty);
         };
     }
 
-    private Func<Task?> CursorMover()
+    private Func<Task?> Scroller()
+    {
+        return async () =>
+        {
+            while (true)
+            {
+                await Task.Delay(DELAY);
+                if (IsAngleRight && _landmarks.IsNew)
+                {
+                    if (IsScrollDown)
+                    {
+                        if (speedScroll < 0) speedScroll = 0;
+                        speedScroll += ScrollAcseleration;
+                        if (speedScroll > ScrollLimitSpeed) speedScroll = ScrollLimitSpeed;
+                    }
+                    else if (IsScrollUp)
+                    {
+                        if (speedScroll > 0) speedScroll = 0;
+                        speedScroll -= ScrollAcseleration;
+                        if (speedScroll < -ScrollLimitSpeed) speedScroll = -ScrollLimitSpeed;
+                    }
+                    else speedScroll = 0;
+                    _cursor.SetMouseScroll((int)speedScroll);
+                }              
+            }
+        };
+    }
+    private Func<Task?> Mover()
     {
         return async () =>
         {
@@ -146,36 +204,33 @@ public class MouseHandController
             {
                 await Task.Delay(DELAY);
 
-                
-                //&& SingleManager.StatusData.State == ReceivedDataHandlers.StatusState.Captured;
-                
                 if (IsAngleRight && _landmarks.IsNew)
-                {            
+                {
                     if (IsMoveRight)
                     {
                         if (speedX < 0) speedX = 0;
-                        speedX += StepX;
-                        if (speedX > LimitX) speedX = LimitX;
+                        speedX += HorizontalAcseleration;
+                        if (speedX > HorizontalLimitSpeed) speedX = HorizontalLimitSpeed;
                     }
                     else if (IsMoveLeft)
                     {
                         if (speedX > 0) speedX = 0;
-                        speedX -= StepX;
-                        if (speedX < -LimitX) speedX = -LimitX;
+                        speedX -= HorizontalAcseleration;
+                        if (speedX < -HorizontalLimitSpeed) speedX = -HorizontalLimitSpeed;
                     }
                     else speedX = 0f;
 
                     if (IsMoveDown)
                     {
                         if (speedY < 0) speedY = 0;
-                        speedY += StepY;
-                        if (speedY > LimitY) speedY = LimitY;
+                        speedY += VerticalAcseleration;
+                        if (speedY > VerticalLimitSpeed) speedY = VerticalLimitSpeed;
                     }
                     else if (IsMoveUp)
                     {
                         if (speedY > 0) speedY = 0;
-                        speedY -= StepY;
-                        if (speedY < -LimitY) speedY = -LimitY;
+                        speedY -= VerticalAcseleration;
+                        if (speedY < -VerticalLimitSpeed) speedY = -VerticalLimitSpeed;
                     }
                     else speedY = 0f;
                     _cursor.Move((int)(_cursor.X + speedX), (int)(_cursor.Y + speedY));
@@ -183,7 +238,7 @@ public class MouseHandController
             }
         };
     }
-
+    
     private bool CheckAngle(PointF pt1, PointF pt2, PointF center)
     {
         (float lenX, float lenY) AB = (pt1.X - center.X, pt1.Y - center.Y);
@@ -196,36 +251,75 @@ public class MouseHandController
         var deg = radian * 180 / MathF.PI;
         return deg > 30 && deg < 70;
     }
+    private float GetDistance(PointF p1, PointF p2) => (float)Math.Sqrt((p1.X - p2.X) * (p1.X - p2.X) + (p1.Y - p2.Y) * (p1.Y - p2.Y));
+    public float ControllMeassure => GetDistance(_landmarks.Wrist.Point, _landmarks.IndexMcp.Point);
+    public bool IsAngleRight { get; private set; }
 
-    private void TriggerRightMouse(PointF pt1, PointF pt2)
+    private void TriggerRightMouse()
     {
-        var dist = GetDistance(pt1, pt2);
+        Landmark? trigger1 = GetLandmark(RightButtonTrigger1);
+        Landmark? trigger2 = GetLandmark(RightButtonTrigger2);
+        if (trigger1 == null || trigger2 == null) return;
+        var dist = GetDistance(trigger1.Point, trigger2.Point);
         var zone = ControllMeassure * ActivationRightMouseZone;
         MouseRightDownTrigger = MouseRightDownTrigger ? dist < zone + ControllMeassure * HISTEREZIS : dist < zone - ControllMeassure * HISTEREZIS;
     }
 
-    private void TriggerLeftMouse(PointF pt1, PointF pt2)
+    private void TriggerLeftMouse()
     {
-        var dist = GetDistance(pt1, pt2);
+        Landmark? trigger1 = GetLandmark(LeftButtonTrigger1);
+        Landmark? trigger2 = GetLandmark(LeftButtonTrigger2);
+        if (trigger1 == null || trigger2 == null) return;
+        var dist = GetDistance(trigger1.Point, trigger2.Point);
         var zone = ControllMeassure * ActivationLeftMouseZone;
         MouseLeftDownTrigger = MouseLeftDownTrigger ? dist < zone + ControllMeassure * HISTEREZIS : dist < zone - ControllMeassure * HISTEREZIS;
     }
 
-    private float GetDistance(PointF p1, PointF p2) => (float)Math.Sqrt((p1.X - p2.X) * (p1.X - p2.X) + (p1.Y - p2.Y) * (p1.Y - p2.Y));
-    
-    private void MoveHorizontal(PointF ptRemote, PointF ptMain)
+    private void Scrolling()
     {
-        var diff = ptMain.X - ptRemote.X + HorizontalOffset * ControllMeassure;
-        var zone = (float)(NonsensitiveZoneHorizontalValue * ControllMeassure);
+        Landmark? remote = GetLandmark(ScrollRemote);
+        Landmark? main = GetLandmark(ScrollMain);
+        if (remote == null || main == null) return;
+        var diff = remote.Point.Y - main.Point.Y + ScrollOffset * ControllMeassure;
+        var zone = (float)(ScrollNonsensitiveZone * ControllMeassure);
+        IsScrollUp = Math.Abs(diff) - zone > ControllMeassure * HISTEREZIS && diff < 0;
+        IsScrollDown = Math.Abs(diff) - zone > ControllMeassure * HISTEREZIS && diff > 0;
+    }
+
+    private void MoveHorizontal()
+    {
+        Landmark? remote = GetLandmark(HorizontalRemote);
+        Landmark? main = GetLandmark(HorizontalMain);
+        if (remote == null || main == null) return;
+        var diff = main.Point.X - remote.Point.X + HorizontalOffset * ControllMeassure;
+        var zone = (float)(HorizontalNonSensitiveZone * ControllMeassure);
         IsMoveRight = Math.Abs(diff) - zone > ControllMeassure * HISTEREZIS && diff > 0;
         IsMoveLeft = Math.Abs(diff) - zone > ControllMeassure * HISTEREZIS && diff < 0;
     }
 
-    private void MoveVertical(PointF ptRemote, PointF ptMain)
+    private void MoveVertical()
     {
-        var diff = ptRemote.Y - ptMain.Y + VerticalOffset * ControllMeassure;
-        var zone = (float)(NonsensitiveZoneVerticalValue * ControllMeassure);
+        Landmark? remote = GetLandmark(VerticalRemote);
+        Landmark? main = GetLandmark(VerticalMain);
+        if (remote == null || main == null) return;
+        var diff = remote.Point.Y - main.Point.Y + VerticalOffset * ControllMeassure;
+        var zone = (float)(VerticalNonSensitiveZone * ControllMeassure);
         IsMoveUp = Math.Abs(diff) - zone > ControllMeassure * HISTEREZIS && diff < 0;
         IsMoveDown = Math.Abs(diff) - zone > ControllMeassure * HISTEREZIS && diff > 0;
     }
+
+    private Landmark? GetLandmark(Mark mark) => _landmarks.Landmarks.FirstOrDefault(l => l.Mark == mark);
+    
+    public Mark HorizontalRemote { get; set; } = Mark.ThumbTip;
+    public Mark HorizontalMain { get; set; } = Mark.ThumbMcp;
+    public Mark VerticalRemote { get; set; } = Mark.MiddleTip;
+    public Mark VerticalMain { get; set; } = Mark.MiddlePip;
+    public Mark ScrollRemote { get; set; } = Mark.PinkyTip;
+    public Mark ScrollMain { get; set; } = Mark.PinkyPip;
+
+    public Mark LeftButtonTrigger1 { get; set; } = Mark.IndexTip;
+    public Mark LeftButtonTrigger2 { get; set; } = Mark.ThumbTip;
+    public Mark RightButtonTrigger1 { get; set; } = Mark.RingTip;
+    public Mark RightButtonTrigger2 { get; set; } = Mark.ThumbTip;
+
 }

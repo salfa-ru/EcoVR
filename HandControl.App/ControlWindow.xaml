@@ -3,188 +3,46 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:HandControl.App.Windows"
+        xmlns:local="clr-namespace:HandControl.App.Windows" xmlns:app="clr-namespace:HandControl.App"
         mc:Ignorable="d"
-        Title="Панель управления"
-        Width="600"
+        Title="{StaticResource TitleControlPanel}"
+        Width="400"
+        Height="800"
         ResizeMode="NoResize"
         Closing="Window_Closing"
-        WindowStyle="ToolWindow"
-       >
-    
-    <Grid Margin ="10">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.5*"/>
-            <ColumnDefinition Width="0.5*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="0.1*"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <GroupBox x:Name="stConfig" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Header="{Binding Title}">
+        WindowStyle="ToolWindow" 
+        Background="{StaticResource SolidWindowBackground}"
+        Foreground ="{StaticResource SolidWindowForeground}">
+    <TabControl Margin="5" Style="{StaticResource TabControlStyle}">
+        <TabItem Style="{StaticResource TabItemStyle}" Header="{StaticResource HeaderMainSettings}">
             <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Column="0" Margin ="5" Text="{Binding State}"/>
+                <app:BasicSettingsControl Grid.Row="0" x:Name="basicSettings"/>
             </Grid>
-        </GroupBox>
-        <StackPanel Grid.Column="0" Grid.Row="1">
-            <GroupBox x:Name="camConfig" Header="{Binding Title}">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Margin="5" Grid.RowSpan="2">Камера:</TextBlock>
-                    <TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Margin="5" Grid.RowSpan="2">Разрешение:</TextBlock>
-                    <ComboBox  Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="4" Margin="5" ItemsSource="{Binding CamerasNames}" SelectedIndex="{Binding Index}"/>
-                    <ComboBox  Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="4" Margin="5" ItemsSource="{Binding Resolutions}" SelectedIndex="{Binding SelectedResolution}"/>
-                    <Button    Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Margin="5" Content="Старт" Command="{Binding StartCapturingCommand}" IsEnabled="{Binding IsCanStart}"/>
-                    <Button    Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="2" Margin="5" Content="Применить" Command="{Binding RestartCapturingCommand}" IsEnabled="{Binding IsCanStop}"/>
-                    <Button    Grid.Column="4" Grid.Row="2" Grid.ColumnSpan="2" Margin="5" Content="Стоп" Command="{Binding StopCapturingCommand}" IsEnabled="{Binding IsCanRestart}"/>
-                </Grid>
-            </GroupBox>                       
-            <GroupBox x:Name="frConfig"  Header="{Binding Title}">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="0.8*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <TextBlock Grid.Column="0" Grid.Row="0" Margin ="5" >Показать окно:</TextBlock>
-                    <TextBlock Grid.Column="0" Grid.Row="1" Margin ="5" >Зеркало:</TextBlock>
-                    <TextBlock Grid.Column="0" Grid.Row="2" Margin ="5" >Детектирование:</TextBlock>
-                    <CheckBox  Grid.Column="1" Grid.Row="0" Margin ="5" IsChecked="{Binding IsPreview}"/>
-                    <CheckBox  Grid.Column="1" Grid.Row="1" Margin ="5" IsChecked="{Binding IsFlip}"/>
-                    <CheckBox  Grid.Column="1" Grid.Row="2" Margin ="5" IsChecked="{Binding IsDetect}"/>
-                    <Button    Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Margin="5" Content="Применить" Command="{Binding FrameCommand}"/>
-                </Grid>
-            </GroupBox>
-
-            <GroupBox x:Name="remCapture" Header="{Binding Title}">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <TextBlock  Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Margin="5">Получение данных:</TextBlock>
-                    <Button     Grid.Column="0" Grid.Row="1" Margin="5" Content="Запустить" Command="{Binding StartDataSendingCommand}"/>
-                    <Button     Grid.Column="1" Grid.Row="1" Margin="5" Content="Остановить" Command="{Binding StopDataSendingCommand}"/>
-                </Grid>
-            </GroupBox>
-        </StackPanel>
-
-        <StackPanel Grid.Column="1" Grid.Row="1">
-            <GroupBox x:Name="sensConfig"  Header="{Binding Title}">
-                <StackPanel>
-                    <GroupBox Header="Зона не чувствительности:" Margin ="5" >
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition Width="0.3*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0"  Grid.Column="0" Margin ="5" Text="Горизонтальная (0.1 - 0.9): "/>
-                            <TextBox   Grid.Row="0"  Grid.Column="1" Margin ="5" Text="{Binding NonsensitiveZoneHorizontalValue}"/>
-                            <TextBlock Grid.Row="1"  Grid.Column="0" Margin ="5" Text="Вертикальная (0.1 - 0.9): "/>
-                            <TextBox   Grid.Row="1"  Grid.Column="1" Margin ="5" Text="{Binding NonsensitiveZoneVerticalValue}"/>
-                        </Grid>
-                    </GroupBox>
-
-                    <GroupBox Header="Смещение зоны нечувствительности:" Margin ="5" >
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition Width="0.3*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0"  Grid.Column="0" Margin ="5" Text="Горизонтальное (-0.2 - 0,2): "/>
-                            <TextBox   Grid.Row="0"  Grid.Column="1" Margin ="5" Text="{Binding HorizontalOffset}"/>
-                            <TextBlock Grid.Row="1"  Grid.Column="0" Margin ="5" Text="Вертикальное (-0.2 - 0,2): "/>
-                            <TextBox   Grid.Row="1"  Grid.Column="1" Margin ="5" Text="{Binding VerticalOffset}"/>
-                        </Grid>
-                    </GroupBox>
-
-                    <GroupBox Header="Зона сработки кнопок:" Margin ="5" >
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition Width="0.3*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Grid.Column="0" Margin ="5" Text="Левой кнопки (0.0 - 0,5): "/>
-                            <TextBox   Grid.Row="0" Grid.Column="1" Margin ="5" Text="{Binding ActivationLeftMouseZone}"/>
-                            <TextBlock Grid.Row="1" Grid.Column="0" Margin ="5" Text="Правой кнопки (0.0 - 0,5): "/>
-                            <TextBox   Grid.Row="1" Grid.Column="1" Margin ="5" Text="{Binding ActivationRightMouseZone}"/>
-                        </Grid>
-                    </GroupBox>
-
-                    <GroupBox Header="Ускорение курсора:" Margin ="5" >
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition Width="0.3*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Grid.Column="0" Margin ="5" Text="Горизонтальное (0.1 - 1,0): "/>
-                            <TextBox   Grid.Row="0" Grid.Column="1" Margin ="5" Text="{Binding AccelerateX}"/>
-                            <TextBlock Grid.Row="1" Grid.Column="0" Margin ="5" Text="Вертикальное (0.1 - 1,0): "/>
-                            <TextBox   Grid.Row="1" Grid.Column="1" Margin ="5" Text="{Binding AccelerateY}"/>
-                        </Grid>
-                    </GroupBox>
-
-                    <GroupBox Header="Лимит скорости:" Margin ="5" >
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition Width="0.3*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Grid.Column="0" Margin ="5" Text="Горизонтальный (10 - 50): "/>
-                            <TextBox   Grid.Row="0" Grid.Column="1" Margin ="5" Text="{Binding SpeedLimitX}"/>
-                            <TextBlock Grid.Row="1" Grid.Column="0" Margin ="5" Text="Вертикальный (10 - 50): "/>
-                            <TextBox   Grid.Row="1" Grid.Column="1" Margin ="5" Text="{Binding SpeedLimitY}"/>
-                        </Grid>
-                    </GroupBox>
-                </StackPanel>
-            </GroupBox>
-        </StackPanel>
-    </Grid>
+        </TabItem>
+        <TabItem Style="{StaticResource TabItemStyle}" Header="{StaticResource HeaderMovingSettings}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <app:MoveSettingsControl Grid.Row="0" x:Name="horizontalSettings"/>
+                <app:MoveSettingsControl Grid.Row="1" x:Name="verticalSettings"/>
+            </Grid>
+        </TabItem>
+        <TabItem Style="{StaticResource TabItemStyle}" Header="{StaticResource HeaderScrollingSettings}">
+            <StackPanel>
+                <app:ScrollSettingsControl x:Name="scrollSettings"/>
+            </StackPanel>
+        </TabItem>
+        <TabItem Style="{StaticResource TabItemStyle}" Header="{StaticResource HeaderButtonSettings}">
+            <StackPanel>
+                <app:MouseButtonSettings x:Name="btnLeftSetting"/>
+                <app:MouseButtonSettings x:Name="btnRightSetting"/>
+            </StackPanel>
+        </TabItem>
+    </TabControl>
 </Window>

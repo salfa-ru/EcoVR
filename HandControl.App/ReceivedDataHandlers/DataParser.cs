@@ -6,6 +6,8 @@ namespace HandControl.App.ReceivedDataHandlers;
 
 public class DataParser
 {
+    private const string LEFT = "left";
+    private const string RIGHT = "right";
     private StatusData _status;
 
     public DataParser()
@@ -52,8 +54,8 @@ public class DataParser
             PointF center = new PointF(
                 deserialized.detection.data.center[0],
                 deserialized.detection.data.center[1]);
-            HandType handType = deserialized.detection.data.type == "left" && deserialized.detection.flip
-                || deserialized.detection.data.type == "right" && !deserialized.detection.flip
+            HandType handType = deserialized.detection.data.type == LEFT && deserialized.detection.flip
+                || deserialized.detection.data.type == RIGHT && !deserialized.detection.flip
                 ? HandType.Right : HandType.Left;
             HandData hand = new HandData() { Box = rect, Center = center, Type = handType };
             hand.AddPoints(deserialized.detection.data.lmlist);

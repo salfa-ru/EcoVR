@@ -10,12 +10,13 @@ namespace HandControl.App.Windows
         
         public ControlWindow()
         {
-             InitializeComponent();
-             camConfig.DataContext = new ControlPanelCameraViewModel();
-             frConfig.DataContext = new ControlPanelFrameViewModel();
-             remCapture.DataContext = new ControlPanelMainCommandViewModel();
-             stConfig.DataContext = new ControlPanelStatusViewModel();
-             sensConfig.DataContext = new ControlPanelHandViewModel();
+            InitializeComponent();
+            basicSettings.DataContext = new ControlPanelBasicSettingsViewModel();
+            horizontalSettings.DataContext = new ControlPanelHorizontalMovingSettingsViewModel();
+            verticalSettings.DataContext = new ControlPanelVerticalMovingSettingsViewModel();
+            scrollSettings.DataContext = new ControlPanelScrollSettingsViewModel();
+            btnLeftSetting.DataContext = new ControlPanelLeftButtonSettingsViewModel();
+            btnRightSetting.DataContext = new ControlPanelRightButtonSettingsViewModel();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

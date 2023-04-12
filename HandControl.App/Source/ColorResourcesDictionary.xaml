@@ -1,0 +1,19 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Color x:Key="ColorWindowBackround">#222</Color>
+    <Color x:Key="ColorWindowForeground">#ccc</Color>
+    <Color x:Key="ColorUserControlBackround">#222</Color>
+    <Color x:Key="ColorUserControlForeground">#ccc</Color>
+    
+    <Color x:Key="ColorTextBlockForeground">#ccc</Color>
+    <Color x:Key="ColorTextBlockBackground">#00000000</Color>
+
+    <Color x:Key="ColorButtonForeground">#ccc</Color>
+    <Color x:Key="ColorButtonForegroundDisabled">#999</Color>
+    <Color x:Key="ColorButtonBackgroundCommon">#222</Color>
+    <Color x:Key="ColorButtonBackgroundOver">#111</Color>
+    <Color x:Key="ColorButtonBackgroundPressed">#333</Color>
+    <Color x:Key="ColorButtonBorder">#555</Color>
+
+
+</ResourceDictionary>

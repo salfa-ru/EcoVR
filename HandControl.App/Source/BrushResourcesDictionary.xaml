@@ -1,0 +1,21 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <SolidColorBrush x:Key="SolidWindowBackground" Color="{DynamicResource ColorWindowBackround}"/>
+    <SolidColorBrush x:Key="SolidUserControlBackground" Color="{DynamicResource ColorWindowBackround}"/>
+    <SolidColorBrush x:Key="SolidWindowForeground" Color="{DynamicResource ColorWindowForeground}"/>
+    <SolidColorBrush x:Key="SolidUserControlForeground" Color="{DynamicResource ColorWindowForeground}"/>
+    
+    <SolidColorBrush x:Key="SolidTextBlockForeground" Color="{DynamicResource ColorTextBlockForeground}"/>
+    <SolidColorBrush x:Key="SolidTextBlockBackground" Color="{DynamicResource ColorTextBlockBackground}"/>
+    
+    
+    <SolidColorBrush x:Key="SolidTextButtonBackgroundCommon" Color="{DynamicResource ColorButtonBackgroundCommon}"/>
+    <SolidColorBrush x:Key="SolidTextButtonBackgroundOver" Color="{DynamicResource ColorButtonBackgroundOver}"/>
+    <SolidColorBrush x:Key="SolidTextButtonBackgroundPressed" Color="{DynamicResource ColorButtonBackgroundPressed}"/>
+    <SolidColorBrush x:Key="SolidTextButtonBorder" Color="{DynamicResource ColorButtonBorder}"/>
+    <SolidColorBrush x:Key="SolidTextButtonForeground" Color="{DynamicResource ColorUserControlForeground}"/>
+    <SolidColorBrush x:Key="SolidTextButtonDisabledForeground" Color="{DynamicResource ColorButtonForegroundDisabled}"/>
+
+
+
+</ResourceDictionary>

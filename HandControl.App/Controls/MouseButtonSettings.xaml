@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="HandControl.App.MouseButtonSettings"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:HandControl.App"
+             mc:Ignorable="d"
+             Background="{StaticResource SolidWindowBackground}"
+             Foreground ="{StaticResource SolidWindowForeground}">
+    <GroupBox Style="{StaticResource GroupBoxStyle}" Header="{Binding Title}"  Margin="5 0" >
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+    
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource TextBlockStyle}" Text = "{StaticResource TextBlockRemotePoint}"/>
+            <ComboBox  Grid.Row="1" Grid.Column="0" Style="{StaticResource ComboBoxStyle}"  ItemsSource="{Binding Items}" SelectedIndex="{Binding SelectedIndexTrigger1}"/>
+            <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource TextBlockStyle}" Text = "{StaticResource TextBlockMainPoint}"/>
+            <ComboBox  Grid.Row="3" Grid.Column="0" Style="{StaticResource ComboBoxStyle}"  ItemsSource="{Binding Items}" SelectedIndex="{Binding SelectedIndexTrigger2}"/>
+            <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource TextBlockStyle}" Text = "{StaticResource TextBlockActivationZone}"/>
+            <Slider    Grid.Row="5" Grid.Column="0" Minimum="0.1" Maximum="0.5" Value="{Binding ActivationZone}"/>
+        </Grid>
+    </GroupBox>
+</UserControl>

@@ -15,6 +15,7 @@ namespace HandControl.App.Configuration
         public DetectorConfig DetectorConfig { get; set; } = null!;
 
         public FrameConfig FrameConfig { get; set; } = null!;
+        public ControlConfig ControlConfig { get; set; } = null!;
 
         public static void Save() 
         {
@@ -30,7 +31,7 @@ namespace HandControl.App.Configuration
             {
                 if (_instance == null)
                 {
-                    _instance = JsonConvert.DeserializeObject<Settings>(File.ReadAllText(_path)) ?? new Settings();
+                    _instance = JsonConvert.DeserializeObject<Settings>(File.ReadAllText(_path)) ?? GetDefault();
                 }
                 return _instance;
             }
@@ -56,7 +57,8 @@ namespace HandControl.App.Configuration
                     IsDetect = true,
                     IsFlip = false,
                     IsPreview = true
-                }
+                },
+                ControlConfig = new() { }
             };
         }
     }

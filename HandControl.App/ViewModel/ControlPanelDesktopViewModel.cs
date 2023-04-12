@@ -1,5 +1,4 @@
 ﻿using HandControl.App.Model;
-using System.Windows;
 using System.Windows.Media;
 
 namespace HandControl.App.ViewModel;
@@ -10,23 +9,21 @@ public class ControlPanelDesktopViewModel : ControlPanelBaseViewModel
     private Brush DISABLED => new SolidColorBrush(Color.FromArgb(100, 255, 255, 255));
     private Brush ENABLED => new SolidColorBrush(Color.FromArgb(10, 255, 255, 255));
 
-    public Brush IsMoveLeft =>_controller.IsMoveLeft ? DISABLED : ENABLED;
-    public Brush IsMoveRight =>_controller.IsMoveRight ? DISABLED : ENABLED;
-    public Brush IsMoveUp =>_controller.IsMoveUp ? DISABLED : ENABLED;
-    public Brush IsMoveDown =>_controller.IsMoveDown ? DISABLED : ENABLED;
+    public Brush IsMoveLeft => _controller?.IsMoveLeft == true ? DISABLED : ENABLED;
+    public Brush IsMoveRight => _controller?.IsMoveRight == true ? DISABLED : ENABLED;
+    public Brush IsMoveUp => _controller?.IsMoveUp == true ? DISABLED : ENABLED;
+    public Brush IsMoveDown => _controller?.IsMoveDown == true ? DISABLED : ENABLED;
 
-    public Brush IsLeftButtonPress => _controller.MouseLeftDownTrigger ? DISABLED : ENABLED;
-    public Brush IsRightButtonPress => _controller.MouseRightDownTrigger ? DISABLED : ENABLED;
+    public Brush IsLeftButtonPress => _controller?.MouseLeftDownTrigger == true ? DISABLED : ENABLED;
+    public Brush IsRightButtonPress => _controller?.MouseRightDownTrigger == true ? DISABLED : ENABLED;
 
-    public double LeftProp { get; set; }
-    public double TopProp { get; set; }
+    public double LeftProp { get; set; } = SingleManager.CursorApi.ScreenWidth - 200;
+    public double TopProp { get; set; } = SingleManager.CursorApi.ScreenHeight - 250;
 
 
     public ControlPanelDesktopViewModel()
     {
         _controller = SingleManager.MouseHandController;
-        LeftProp = SingleManager.CursorApi.ScreenWidth - 200;
-        TopProp = SingleManager.CursorApi.ScreenHeight - 250;
         _controller.OnMouseHandStateChanged += (s, a) => {
             OnPropertyChanged(nameof(IsMoveLeft));
             OnPropertyChanged(nameof(IsMoveRight));

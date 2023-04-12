@@ -227,22 +227,12 @@ public class CursorApi
     #endregion
     
     #region scroll methods
-    /// <summary>
-    /// Скролл вверх
-    /// </summary>
-    /// <param name="distance">зависит от разрешения, количество единиц прокрутки</param>
-    public void SetMouseUpScroll(int distance)
-    {
-        mouse_event(MOUSEEVENTF_WHEEL, 0, 0, (uint)(distance * -1), 0);
-        OnMouseScrollEvent?.Invoke(this, new MouseEventScrollArgs() { X = X, Y = Y, Direction = MouseScrollDirection.Up, Distance = distance });
-
-    }
 
     /// <summary>
     /// Скролл вниз
     /// </summary>
     /// <param name="amount">зависит от разрешения, количество единиц прокрутки</param>
-    public void SetMouseDownScroll(int distance)
+    public void SetMouseScroll(int distance)
     {
         mouse_event(MOUSEEVENTF_WHEEL, 0, 0, (uint)(distance), 0);
         OnMouseScrollEvent?.Invoke(this, new MouseEventScrollArgs() { X = X, Y = Y, Direction = MouseScrollDirection.Down, Distance = distance });

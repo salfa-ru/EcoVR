@@ -1,0 +1,28 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=netstandard">
+
+    <system:String x:Key="TitleControlPanel">Панель управления</system:String>
+    
+    <system:String x:Key="HeaderMainSettings">Основные настройки</system:String>
+    <system:String x:Key="HeaderMovingSettings">Перемещение</system:String>
+    <system:String x:Key="HeaderScrollingSettings">Скроллинг</system:String>
+    <system:String x:Key="HeaderButtonSettings">Кнопки</system:String>
+
+    <system:String x:Key="TextBlockCamera">Камера</system:String>
+    <system:String x:Key="TextBlockSize">Размер</system:String>
+    <system:String x:Key="TextBlockShowVideo">Показывать изображение</system:String>
+    <system:String x:Key="TextBlockOnOffControl">Включить/выключить управление</system:String>
+
+    <system:String x:Key="ButtonStart">Старт</system:String>
+    <system:String x:Key="ButtonApply">Применить</system:String>
+    <system:String x:Key="ButtonStop">Остановить</system:String>
+
+    <system:String x:Key="TextBlockRemotePoint">Управляющая точка</system:String>
+    <system:String x:Key="TextBlockMainPoint">Базисная точка</system:String>
+    <system:String x:Key="TextBlockActivationZone">Зона сработки</system:String>
+    <system:String x:Key="TextBlockNonSensitiveZone">Зона не чувствительности</system:String>
+    <system:String x:Key="TextBlockAcceleration">Ускорение курсора</system:String>
+    <system:String x:Key="TextBlockSpeedLimit">Лимит скорости</system:String>
+  
+</ResourceDictionary>

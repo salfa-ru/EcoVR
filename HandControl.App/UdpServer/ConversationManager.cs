@@ -2,7 +2,7 @@
 using HandControl.App.ReceivedDataHandlers;
 using Newtonsoft.Json;
 using System.Diagnostics;
-
+using System.Threading.Tasks;
 
 namespace HandControl.App.UdpServer;
 
@@ -47,15 +47,22 @@ public class ConversationManager
 
     public void CommandCreate()
     {
-        ProcessStartInfo start = new ProcessStartInfo();
-        string path = "detector\\main.py";
-        start.WindowStyle = ProcessWindowStyle.Hidden;
-        start.FileName = "python";
-        start.Arguments = $"\"{path}\" \"{6000}\" \"{6001}\"";
-        start.CreateNoWindow = true;
-        Process.Start(start);
+        Task.Run(() =>
+        {
+            ProcessStartInfo psi = new ProcessStartInfo("cmd.exe");
+            psi.RedirectStandardInput = true;
+            psi.UseShellExecute = false;
+            psi.CreateNoWindow = true;
+            Process? cmd = Process.Start(psi);
+            if (cmd != null)
+            {
+                cmd.StandardInput.WriteLine("call detector\\myenv\\Scripts\\activate.bat");
+                cmd.StandardInput.WriteLine("python detector\\main.py");
+                cmd.WaitForExit();
+            }
+        });
     }
-
+ 
     public void CommandStop()
     {
         SendJson(new Message() { Status = "main", Command = "stop" });
