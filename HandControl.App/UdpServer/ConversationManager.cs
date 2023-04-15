@@ -52,11 +52,14 @@ public class ConversationManager
             ProcessStartInfo psi = new ProcessStartInfo("cmd.exe");
             psi.RedirectStandardInput = true;
             psi.UseShellExecute = false;
-            psi.CreateNoWindow = true;
+            psi.CreateNoWindow = false;
             Process? cmd = Process.Start(psi);
             if (cmd != null)
             {
                 cmd.StandardInput.WriteLine("call detector\\myenv\\Scripts\\activate.bat");
+                cmd.StandardInput.WriteLine("pip install opencv-python");
+                cmd.StandardInput.WriteLine("pip install cvzone");
+                cmd.StandardInput.WriteLine("pip install mediapipe");
                 cmd.StandardInput.WriteLine("python detector\\main.py");
                 cmd.WaitForExit();
             }
