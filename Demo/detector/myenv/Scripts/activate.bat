@@ -1,4 +1,4 @@
-@set "VIRTUAL_ENV=F:\Users\mrAbvir\Desktop\doct24\EcoVR\Demo\detector\venv"
+@set "VIRTUAL_ENV=F:\Users\mrAbvir\Desktop\doct24\EcoVR\Demo\detector\myenv"
 
 @if defined _OLD_VIRTUAL_PROMPT (
     @set "PROMPT=%_OLD_VIRTUAL_PROMPT%"
