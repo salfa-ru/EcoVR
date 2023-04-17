@@ -1,8 +1,13 @@
 ﻿using HandControl.App.Configuration;
 using HandControl.App.ReceivedDataHandlers;
 using Newtonsoft.Json;
+using System;
 using System.Diagnostics;
+using System.IO;
+using System.Security.Cryptography.Xml;
+using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace HandControl.App.UdpServer;
 
@@ -49,6 +54,12 @@ public class ConversationManager
     {
         Task.Run(() =>
         {
+            
+            StartScriptEnvironment();
+        });
+
+        static void StartScriptEnvironment()
+        {
             ProcessStartInfo psi = new ProcessStartInfo("cmd.exe");
             psi.RedirectStandardInput = true;
             psi.UseShellExecute = false;
@@ -57,13 +68,14 @@ public class ConversationManager
             if (cmd != null)
             {
                 cmd.StandardInput.WriteLine("call detector\\myenv\\Scripts\\activate.bat");
+                cmd.StandardInput.WriteLine("python --version");
                 cmd.StandardInput.WriteLine("pip install opencv-python");
                 cmd.StandardInput.WriteLine("pip install cvzone");
                 cmd.StandardInput.WriteLine("pip install mediapipe");
                 cmd.StandardInput.WriteLine("python detector\\main.py");
                 cmd.WaitForExit();
             }
-        });
+        }
     }
  
     public void CommandStop()
