@@ -54,7 +54,7 @@ public class ConversationManager
     {
         Task.Run(() =>
         {
-            
+            //CorrectingPath();
             StartScriptEnvironment();
         });
 
@@ -76,8 +76,46 @@ public class ConversationManager
                 cmd.WaitForExit();
             }
         }
+        static void CorrectingPath()
+        {
+            var path = Directory.GetCurrentDirectory() + "\\detector\\myenv\\Scripts\\activate";
+            var pathBat = Directory.GetCurrentDirectory() + "\\detector\\myenv\\Scripts\\activate.bat";
+            var pathCon = Directory.GetCurrentDirectory() + "\\detector\\myenv\\pyvenv.cfg";
+            var pathEnv = Directory.GetCurrentDirectory() + "\\detector\\myenv";
+            
+            var lines = File.ReadAllLines(path);
+            StringBuilder sb = new StringBuilder();
+            foreach (var item in lines)
+            {
+                if (item.StartsWith("VIRTUAL_ENV=")) sb.Append("VIRTUAL_ENV=\"" + Directory.GetCurrentDirectory() + "\\detector\\myenv\"\r\n");
+                else sb.Append(item + "\r\n");
+            }
+            File.WriteAllText(path, sb.ToString());
+
+            lines = File.ReadAllLines(pathBat);
+            sb = new StringBuilder();
+            foreach (var item in lines)
+            {
+                if (item.StartsWith("set VIRTUAL_ENV")) sb.Append("set VIRTUAL_ENV" + Directory.GetCurrentDirectory() + "\\detector\\myenv\r\n");
+                else sb.Append(item + "\r\n");
+            }
+            File.WriteAllText(pathBat, sb.ToString());
+
+            lines = File.ReadAllLines(pathCon);
+            sb = new StringBuilder();
+            foreach (var item in lines)
+            {
+                if (item.StartsWith("home = ")) sb.Append("home = " + Directory.GetCurrentDirectory() + "\\detector\\myenv\\Scripts\r\n");
+                else sb.Append(item + "\r\n");
+            }
+            File.WriteAllText(pathCon, sb.ToString());
+
+        }
+
     }
- 
+
+    
+
     public void CommandStop()
     {
         SendJson(new Message() { Status = "main", Command = "stop" });
