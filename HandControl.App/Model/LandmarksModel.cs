@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Drawing;
 namespace HandControl.App.Model;
 
 public class LandmarksModel
 {
     public event EventHandler? OnDataChanged;
     public List<Landmark> Landmarks { get; private set; } = new();
+    public List<Landmark> LandmarksRelative { get; private set; } = new();
 
     #region Landmark
     public Landmark Wrist => GetLandmark(0);
@@ -43,8 +44,10 @@ public class LandmarksModel
         lm.OnLandmarksChanged += (s, a) =>
         {
             if (lm.Hand != null)
+            {
                 Landmarks = lm.Hand.Points.Select((item, index) => new Landmark((Mark)index, item)).ToList();
-
+                LandmarksRelative = lm.Hand.Points.Select((item, index) => new Landmark((Mark)index, new PointF(1 - item.X / (float)(lm.Frame?.Width ?? 640), item.Y / (float)(lm.Frame?.Height ?? 480)))).ToList();
+            }
             OnDataChanged?.Invoke(this, EventArgs.Empty);
             _lastUpdateTime = DateTime.Now;
         };

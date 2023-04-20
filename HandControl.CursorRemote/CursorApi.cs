@@ -75,10 +75,10 @@ public class CursorApi
     /// <summary>
     /// Позиция курсора по горизонтали
     /// </summary>
-    public int X
+    private int LastSetX
     {
         get { return _x; }
-        private set
+        set
         {
             if (value < 0) _x = 0;
             else if (value > ScreenWidth) _x = ScreenWidth;
@@ -90,10 +90,10 @@ public class CursorApi
     /// <summary>
     /// Позиция курсора по вертикали
     /// </summary>
-    public int Y
+    private int LastSetY
     {
         get { return _y; }
-        private set
+        set
         {
             if (value < 0) _y = 0;
             else if (value > ScreenHeight) _y = ScreenHeight;           
@@ -101,6 +101,20 @@ public class CursorApi
             OnMouseMoveEvent?.Invoke(this, new MouseEventMoveArgs() { X = _x, Y = _y });
         }
     }
+    private POINT point;
+
+    /// <summary>
+    /// Текущая позиция курсора
+    /// </summary>
+    public (int X, int Y) Position 
+    {
+        get
+        {           
+            GetCursorPos(out point);
+            return (point.X, point.Y);
+        }
+    }
+
     #endregion
 
     #region imports
@@ -112,6 +126,14 @@ public class CursorApi
     private static extern IntPtr GetDC(IntPtr hwnd);
     [DllImport("gdi32.dll")]
     public static extern int GetDeviceCaps(IntPtr hdc, int nIndex);
+    [DllImport("user32.dll")]
+    static extern bool GetCursorPos(out POINT lpPoint);
+    [StructLayout(LayoutKind.Sequential)]
+    struct POINT
+    {
+        public int X;
+        public int Y;
+    }
 
     private const int DESKTOP_HORZRES = 0x0076;
     private const int DESKTOP_VERTRES = 0x0075;
@@ -132,8 +154,8 @@ public class CursorApi
     /// <param name="y"> по вертикали </param>
     public void Move(int x, int y)
     {
-        X = x; Y = y;
-        SetCursorPos(X, Y);
+        LastSetX = x; LastSetY = y;
+        SetCursorPos(LastSetX, LastSetY);
     }
 
     /// <summary>
@@ -143,8 +165,8 @@ public class CursorApi
     /// <param name="y"> по вертикали </param>
     public void Move(float x, float y)
     {
-        X += (int)x; Y += (int)y;
-        SetCursorPos(X, Y);
+        LastSetX += (int)x; LastSetY += (int)y;
+        SetCursorPos(LastSetX, LastSetY);
     }
 
     /// <summary>
@@ -154,9 +176,9 @@ public class CursorApi
     /// <param name="y">0...1 от разрешение экрана по вертикали</param>
     public void MoveRelative(double x, double y)
     {
-        X = (int)(x * ScreenWidth);
-        Y = (int)(y * ScreenHeight);
-        SetCursorPos(X, Y);
+        LastSetX = (int)(x * ScreenWidth);
+        LastSetY = (int)(y * ScreenHeight);
+        SetCursorPos(LastSetX, LastSetY);
     }
 
 
@@ -170,7 +192,7 @@ public class CursorApi
     {
         SetMouseLeftDown();
         SetMouseLeftUp();
-        OnMouseButtonClickEvent?.Invoke(this, new MouseEventButtonArgs() { X = X, Y = Y, Button = MouseButtons.Left });
+        OnMouseButtonClickEvent?.Invoke(this, new MouseEventButtonArgs() { X = LastSetX, Y = LastSetY, Button = MouseButtons.Left });
     }
 
     /// <summary>
@@ -180,7 +202,7 @@ public class CursorApi
     {
         SetMouseRightDown();
         SetMouseRightUp();
-        OnMouseButtonClickEvent?.Invoke(this, new MouseEventButtonArgs() { X = X, Y = Y, Button = MouseButtons.Right });
+        OnMouseButtonClickEvent?.Invoke(this, new MouseEventButtonArgs() { X = LastSetX, Y = LastSetY, Button = MouseButtons.Right });
     }
 
     /// <summary>
@@ -190,7 +212,7 @@ public class CursorApi
     {
         SetMouseMiddleDown();
         SetMouseMiddleUp();
-        OnMouseButtonClickEvent?.Invoke(this, new MouseEventButtonArgs() { X = X, Y = Y, Button = MouseButtons.Middle });
+        OnMouseButtonClickEvent?.Invoke(this, new MouseEventButtonArgs() { X = LastSetX, Y = LastSetY, Button = MouseButtons.Middle });
     }
     #endregion
     
@@ -202,7 +224,7 @@ public class CursorApi
     {
         SetMouseLeftClick();
         SetMouseLeftClick();
-        OnMouseButtonDoubleClickEvent?.Invoke(this, new MouseEventButtonArgs() { X = X, Y = Y, Button = MouseButtons.Left });
+        OnMouseButtonDoubleClickEvent?.Invoke(this, new MouseEventButtonArgs() { X = LastSetX, Y = LastSetY, Button = MouseButtons.Left });
     }
 
     /// <summary>
@@ -212,7 +234,7 @@ public class CursorApi
     {
         SetMouseRightClick();
         SetMouseRightClick();
-        OnMouseButtonDoubleClickEvent?.Invoke(this, new MouseEventButtonArgs() { X = X, Y = Y, Button = MouseButtons.Right });
+        OnMouseButtonDoubleClickEvent?.Invoke(this, new MouseEventButtonArgs() { X = LastSetX, Y = LastSetY, Button = MouseButtons.Right });
     }
 
     /// <summary>
@@ -222,7 +244,7 @@ public class CursorApi
     {
         SetMouseMiddleClick();
         SetMouseMiddleClick();
-        OnMouseButtonDoubleClickEvent?.Invoke(this, new MouseEventButtonArgs() { X = X, Y = Y, Button = MouseButtons.Middle });
+        OnMouseButtonDoubleClickEvent?.Invoke(this, new MouseEventButtonArgs() { X = LastSetX, Y = LastSetY, Button = MouseButtons.Middle });
     }
     #endregion
     
@@ -235,7 +257,7 @@ public class CursorApi
     public void SetMouseScroll(int distance)
     {
         mouse_event(MOUSEEVENTF_WHEEL, 0, 0, (uint)(distance), 0);
-        OnMouseScrollEvent?.Invoke(this, new MouseEventScrollArgs() { X = X, Y = Y, Direction = MouseScrollDirection.Down, Distance = distance });
+        OnMouseScrollEvent?.Invoke(this, new MouseEventScrollArgs() { X = LastSetX, Y = LastSetY, Direction = MouseScrollDirection.Down, Distance = distance });
     }
     #endregion
 
@@ -245,9 +267,9 @@ public class CursorApi
     /// </summary>
     public void SetMouseLeftDown()
     {
-        mouse_event(LEFTDOWN, (uint)X, (uint)Y, 0, 0);
+        mouse_event(LEFTDOWN, (uint)LastSetX, (uint)LastSetY, 0, 0);
         OnMouseButtonDownEvent?.Invoke(this, 
-            new MouseEventButtonArgs() { X = X, Y = Y, Button = MouseButtons.Left });
+            new MouseEventButtonArgs() { X = LastSetX, Y = LastSetY, Button = MouseButtons.Left });
     }
 
     /// <summary>
@@ -255,9 +277,9 @@ public class CursorApi
     /// </summary>
     public void SetMouseRightDown()
     {
-        mouse_event(RIGHTDOWN, (uint)X, (uint)Y, 0, 0);
+        mouse_event(RIGHTDOWN, (uint)LastSetX, (uint)LastSetY, 0, 0);
         OnMouseButtonDownEvent?.Invoke(this, 
-            new MouseEventButtonArgs() { X = X, Y = Y, Button = MouseButtons.Right });
+            new MouseEventButtonArgs() { X = LastSetX, Y = LastSetY, Button = MouseButtons.Right });
     }
 
     /// <summary>
@@ -265,9 +287,9 @@ public class CursorApi
     /// </summary>
     public void SetMouseMiddleDown()
     {
-        mouse_event(MIDDLEDOWN, (uint)X, (uint)Y, 0, 0);
+        mouse_event(MIDDLEDOWN, (uint)LastSetX, (uint)LastSetY, 0, 0);
         OnMouseButtonDownEvent?.Invoke(this,
-            new MouseEventButtonArgs() { X = X, Y = Y, Button = MouseButtons.Middle });
+            new MouseEventButtonArgs() { X = LastSetX, Y = LastSetY, Button = MouseButtons.Middle });
     }
     #endregion
 
@@ -277,9 +299,9 @@ public class CursorApi
     /// </summary>
     public void SetMouseLeftUp()
     {
-        mouse_event(LEFTUP, (uint)X, (uint)Y, 0, 0);
+        mouse_event(LEFTUP, (uint)LastSetX, (uint)LastSetY, 0, 0);
         OnMouseButtonUpEvent?.Invoke(this, 
-            new MouseEventButtonArgs() { X = X, Y = Y, Button = MouseButtons.Left });
+            new MouseEventButtonArgs() { X = LastSetX, Y = LastSetY, Button = MouseButtons.Left });
     }
 
     /// <summary>
@@ -287,9 +309,9 @@ public class CursorApi
     /// </summary>
     public void SetMouseRightUp()
     { 
-        mouse_event(RIGHTUP, (uint)X, (uint)Y, 0, 0);
+        mouse_event(RIGHTUP, (uint)LastSetX, (uint)LastSetY, 0, 0);
         OnMouseButtonUpEvent?.Invoke(this, 
-            new MouseEventButtonArgs() { X = X, Y = Y, Button = MouseButtons.Right });
+            new MouseEventButtonArgs() { X = LastSetX, Y = LastSetY, Button = MouseButtons.Right });
     }
 
     /// <summary>
@@ -297,9 +319,9 @@ public class CursorApi
     /// </summary>
     public void SetMouseMiddleUp()
     {
-        mouse_event(MIDDLEUP, (uint)X, (uint)Y, 0, 0);
+        mouse_event(MIDDLEUP, (uint)LastSetX, (uint)LastSetY, 0, 0);
         OnMouseButtonUpEvent?.Invoke(this, 
-            new MouseEventButtonArgs() { X = X, Y = Y, Button = MouseButtons.Middle });
+            new MouseEventButtonArgs() { X = LastSetX, Y = LastSetY, Button = MouseButtons.Middle });
     }
     #endregion
 }

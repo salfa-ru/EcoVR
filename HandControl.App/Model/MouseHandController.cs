@@ -78,6 +78,8 @@ public class MouseHandController
             {
                 isMoveLeft = value;
             }
+            else
+                isMoveLeft = false;
         }
     }
     public bool IsMoveRight
@@ -89,6 +91,8 @@ public class MouseHandController
             {
                 isMoveRight = value;
             }
+            else 
+                isMoveRight  = false;
         }
     }
     public bool IsMoveUp
@@ -100,6 +104,8 @@ public class MouseHandController
             {
                 isMoveUp = value;
             }
+            else 
+                isMoveUp = false;
         }
     }
     public bool IsMoveDown
@@ -111,6 +117,8 @@ public class MouseHandController
             {
                 isMoveDown = value;
             }
+            else
+                isMoveDown = false;
         }
     }
     public bool MouseLeftDownTrigger
@@ -191,7 +199,7 @@ public class MouseHandController
                         if (speedScroll < -ScrollLimitSpeed) speedScroll = -ScrollLimitSpeed;
                     }
                     else speedScroll = 0;
-                    _cursor.SetMouseScroll((int)speedScroll);
+                    //_cursor.SetMouseScroll((int)speedScroll);
                 }              
             }
         };
@@ -215,28 +223,40 @@ public class MouseHandController
 
     private void MouseOneHandMover()
     {
-        var lms = _landmarks.Landmarks.Select(s => new { Mark = s.Mark, Point = new PointF() { X = 1.0F - (float)(s.Point.X / (SingleManager.LandmarksData?.Frame?.Width ?? 640)), Y = (float)(s.Point.Y / (SingleManager.LandmarksData?.Frame?.Height ?? 480)) } }).ToList();
+        var lms = _landmarks.LandmarksRelative;
         var left = lms.Select(s => s.Point.X).Min();
         var right = lms.Select(s => s.Point.X).Max();
         var top = lms.Select(s => s.Point.Y).Min();
         var bottom = lms.Select(s => s.Point.Y).Max();
         PointF center = new PointF((right + left) / 2, (bottom + top) / 2);
 
-        const float MULTIPLY = 1.2F;
+        float width = _cursor.ScreenWidth * 2.6F;
+        float height = _cursor.ScreenHeight * 2.6F;
 
-        var limLeft = (center.X - left) * MULTIPLY;
-        var limRight = 1.0F - (right - center.X);
-        var limTop = (center.Y - top) * MULTIPLY;
-        var limBottom = 1.0F - (bottom - center.Y);
+        center.X = center.X * width - _cursor.ScreenWidth * 0.8F;
+        center.Y = center.Y * height - _cursor.ScreenHeight * 0.8F;
+     
+        int zoneVertical = 10;
+        int zoneHorizontal = 10;
 
-        var widthMult = MULTIPLY / (limRight - limLeft) ;
-        var heightmult = MULTIPLY / (limBottom - limTop);
-        var x = (center.X - limLeft) * widthMult;
-        var y = (center.Y - limTop) * heightmult;
-        //Console.Clear();
-        //Console.WriteLine($"\r{widthMult}\t{heightmult}");
-        //Console.WriteLine($"\r{x}\t{y}");
-        _cursor.MoveRelative(x, y);
+        speedX = 0;
+        if (MathF.Abs(center.X - _cursor.Position.X) > zoneHorizontal)
+        {
+            speedX = (center.X - _cursor.Position.X) / 5;
+        }
+        speedY = 0;
+        if (MathF.Abs(center.Y - _cursor.Position.Y) > zoneVertical)
+        {
+            speedY = (center.Y - _cursor.Position.Y) / 5;
+        }
+
+        IsMoveLeft = speedX < 0;
+        IsMoveRight = speedX > 0;
+        IsMoveUp = speedY < 0;
+        IsMoveDown = speedY > 0;
+
+        _cursor.Move(speedX, speedY);
+
     }
 
     private void MouseSpeedController()
@@ -268,7 +288,7 @@ public class MouseHandController
             if (speedY < -VerticalLimitSpeed) speedY = -VerticalLimitSpeed;
         }
         else speedY = 0f;
-        _cursor.Move((int)(_cursor.X + speedX), (int)(_cursor.Y + speedY));
+        _cursor.Move(speedX, speedY);
     }
 
     private bool CheckAngle(PointF pt1, PointF pt2, PointF center)
@@ -294,7 +314,7 @@ public class MouseHandController
         if (trigger1 == null || trigger2 == null) return;
         var dist = GetDistance(trigger1.Point, trigger2.Point);
         var zone = ControllMeassure * ActivationRightMouseZone;
-        //MouseRightDownTrigger = MouseRightDownTrigger ? dist < zone + ControllMeassure * HISTEREZIS : dist < zone - ControllMeassure * HISTEREZIS;
+        MouseRightDownTrigger = MouseRightDownTrigger ? dist < zone + ControllMeassure * HISTEREZIS : dist < zone - ControllMeassure * HISTEREZIS;
     }
 
     private void TriggerLeftMouse()
@@ -304,7 +324,7 @@ public class MouseHandController
         if (trigger1 == null || trigger2 == null) return;
         var dist = GetDistance(trigger1.Point, trigger2.Point);
         var zone = ControllMeassure * ActivationLeftMouseZone;
-        //MouseLeftDownTrigger = MouseLeftDownTrigger ? dist < zone + ControllMeassure * HISTEREZIS : dist < zone - ControllMeassure * HISTEREZIS;
+        MouseLeftDownTrigger = MouseLeftDownTrigger ? dist < zone + ControllMeassure * HISTEREZIS : dist < zone - ControllMeassure * HISTEREZIS;
     }
 
     private void Scrolling()
@@ -314,8 +334,8 @@ public class MouseHandController
         if (remote == null || main == null) return;
         var diff = remote.Point.Y - main.Point.Y + ScrollOffset * ControllMeassure;
         var zone = (float)(ScrollNonsensitiveZone * ControllMeassure);
-        //IsScrollUp = Math.Abs(diff) - zone > ControllMeassure * HISTEREZIS && diff < 0;
-        //IsScrollDown = Math.Abs(diff) - zone > ControllMeassure * HISTEREZIS && diff > 0;
+        IsScrollUp = Math.Abs(diff) - zone > ControllMeassure * HISTEREZIS && diff < 0;
+        IsScrollDown = Math.Abs(diff) - zone > ControllMeassure * HISTEREZIS && diff > 0;
     }
 
     private void MoveHorizontal()

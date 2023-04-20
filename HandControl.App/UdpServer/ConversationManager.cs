@@ -1,13 +1,8 @@
 ﻿using HandControl.App.Configuration;
 using HandControl.App.ReceivedDataHandlers;
 using Newtonsoft.Json;
-using System;
 using System.Diagnostics;
-using System.IO;
-using System.Security.Cryptography.Xml;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace HandControl.App.UdpServer;
 
@@ -53,8 +48,7 @@ public class ConversationManager
     public void CommandCreate()
     {
         Task.Run(() =>
-        {
-            //CorrectingPath();
+        {            
             StartScriptEnvironment();
         });
 
@@ -63,59 +57,18 @@ public class ConversationManager
             ProcessStartInfo psi = new ProcessStartInfo("cmd.exe");
             psi.RedirectStandardInput = true;
             psi.UseShellExecute = false;
-            psi.CreateNoWindow = false;
+            psi.CreateNoWindow = true;
             Process? cmd = Process.Start(psi);
             if (cmd != null)
             {
                 cmd.StandardInput.WriteLine("call detector\\myenv\\Scripts\\activate.bat");
                 cmd.StandardInput.WriteLine("python --version");
-                cmd.StandardInput.WriteLine("pip install opencv-python");
-                cmd.StandardInput.WriteLine("pip install cvzone");
-                cmd.StandardInput.WriteLine("pip install mediapipe");
                 cmd.StandardInput.WriteLine("python detector\\main.py");
                 cmd.WaitForExit();
             }
-        }
-        static void CorrectingPath()
-        {
-            var path = Directory.GetCurrentDirectory() + "\\detector\\myenv\\Scripts\\activate";
-            var pathBat = Directory.GetCurrentDirectory() + "\\detector\\myenv\\Scripts\\activate.bat";
-            var pathCon = Directory.GetCurrentDirectory() + "\\detector\\myenv\\pyvenv.cfg";
-            var pathEnv = Directory.GetCurrentDirectory() + "\\detector\\myenv";
-            
-            var lines = File.ReadAllLines(path);
-            StringBuilder sb = new StringBuilder();
-            foreach (var item in lines)
-            {
-                if (item.StartsWith("VIRTUAL_ENV=")) sb.Append("VIRTUAL_ENV=\"" + Directory.GetCurrentDirectory() + "\\detector\\myenv\"\r\n");
-                else sb.Append(item + "\r\n");
-            }
-            File.WriteAllText(path, sb.ToString());
-
-            lines = File.ReadAllLines(pathBat);
-            sb = new StringBuilder();
-            foreach (var item in lines)
-            {
-                if (item.StartsWith("set VIRTUAL_ENV")) sb.Append("set VIRTUAL_ENV" + Directory.GetCurrentDirectory() + "\\detector\\myenv\r\n");
-                else sb.Append(item + "\r\n");
-            }
-            File.WriteAllText(pathBat, sb.ToString());
-
-            lines = File.ReadAllLines(pathCon);
-            sb = new StringBuilder();
-            foreach (var item in lines)
-            {
-                if (item.StartsWith("home = ")) sb.Append("home = " + Directory.GetCurrentDirectory() + "\\detector\\myenv\\Scripts\r\n");
-                else sb.Append(item + "\r\n");
-            }
-            File.WriteAllText(pathCon, sb.ToString());
-
-        }
-
+        }       
     }
-
     
-
     public void CommandStop()
     {
         SendJson(new Message() { Status = "main", Command = "stop" });
