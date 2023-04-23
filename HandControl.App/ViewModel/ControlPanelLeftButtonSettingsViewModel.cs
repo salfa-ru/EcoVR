@@ -12,6 +12,16 @@ public class ControlPanelLeftButtonSettingsViewModel : ControlPanelBaseViewModel
         Title = "Левая кнопка мыши";
     }
 
+    public float TriggerHisterezis
+    {
+        get => SingleManager.MouseHandController.LeftTriggerHisterezis;
+        set 
+        {
+            SingleManager.MouseHandController.LeftTriggerHisterezis = value;
+            OnPropertyChanged(nameof(TriggerHisterezis));
+        }
+    }
+
     public Mark[] Items => (Mark[])Enum.GetValues(typeof(Mark));
 
     public int SelectedIndexTrigger1
@@ -22,8 +32,8 @@ public class ControlPanelLeftButtonSettingsViewModel : ControlPanelBaseViewModel
             _controller.LeftButtonTrigger1 = (Mark)value;
             OnPropertyChanged(nameof(SelectedIndexTrigger1));
         }
-
     }
+
     public int SelectedIndexTrigger2
     {
         get => (int)_controller.LeftButtonTrigger2;
@@ -31,16 +41,6 @@ public class ControlPanelLeftButtonSettingsViewModel : ControlPanelBaseViewModel
         {
             _controller.LeftButtonTrigger2 = (Mark)value;
             OnPropertyChanged(nameof(SelectedIndexTrigger2));
-        }
-    }
-
-    public float ActivationZone
-    {
-        get => _controller.ActivationLeftMouseZone;
-        set
-        {
-            _controller.ActivationLeftMouseZone = value;
-            OnPropertyChanged(nameof(ActivationZone));
         }
     }
 }
@@ -55,6 +55,15 @@ public class ControlPanelRightButtonSettingsViewModel : ControlPanelBaseViewMode
         Title = "Правая кнопка мыши";
     }
 
+    public float TriggerHisterezis
+    {
+        get => SingleManager.MouseHandController.RightTriggerHisterezis;
+        set
+        {
+            SingleManager.MouseHandController.RightTriggerHisterezis = value;
+            OnPropertyChanged(nameof(TriggerHisterezis));
+        }
+    }
     public Mark[] Items => (Mark[])Enum.GetValues(typeof(Mark));
 
     public int SelectedIndexTrigger1
@@ -74,16 +83,6 @@ public class ControlPanelRightButtonSettingsViewModel : ControlPanelBaseViewMode
         {
             _controller.RightButtonTrigger2 = (Mark)value;
             OnPropertyChanged(nameof(SelectedIndexTrigger2));
-        }
-    }
-
-    public float ActivationZone
-    {
-        get => _controller.ActivationRightMouseZone;
-        set
-        {
-            _controller.ActivationRightMouseZone = value;
-            OnPropertyChanged(nameof(ActivationZone));
         }
     }
 }

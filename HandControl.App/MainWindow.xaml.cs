@@ -32,10 +32,17 @@ namespace HandControl.App
 
             _icon = new System.Windows.Forms.NotifyIcon();
             _icon.Icon = new System.Drawing.Icon(Defaults.Constants.TRAY_ICON_PATH);
-            _icon.Visible = true;
+            _icon.Visible = false;
             _icon.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
             _icon.ContextMenuStrip.Items.Add(item);
-            _icon.DoubleClick += (sender, args) => _window?.Show();
+            _icon.DoubleClick += (sender, args) =>
+            {
+                if (_window == null) return;
+                if (_window.Visibility == Visibility.Hidden)
+                    _window.Visibility = Visibility.Visible;
+                else 
+                    _window.Visibility = Visibility.Hidden;
+            };
             
             this.ShowInTaskbar = false;
             this.WindowStyle = WindowStyle.None;
@@ -52,7 +59,17 @@ namespace HandControl.App
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {            
             SingleManager.ConversationManager.CommandCreate();
-            if (_window == null)  _window = new ControlWindow();           
+            LoadWindow lw = new LoadWindow();
+            bool? result = lw.ShowDialog();
+            if (result == true)
+            {
+                if (_window == null)
+                {
+                    _window = new ControlWindow();
+                    _icon.Visible = true;
+                }
+
+            }                      
         }
 
         private void Window_Closed(object sender, System.EventArgs e)

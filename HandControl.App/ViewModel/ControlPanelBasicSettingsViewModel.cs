@@ -60,6 +60,7 @@ namespace HandControl.App.ViewModel
             StopCapturingCommand = new Command((_) => conversation.CommandStop());
             RestartCapturingCommand = new Command((_) => conversation.CommandCameraSetResolution(_resolutionConfig.Index, _resolutionConfig.Width, _resolutionConfig.Height));
             _videoDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
+            
             SelectedResolution = Find();
             StatusData status = SingleManager.StatusData;
             status.OnStateChanged += (sender, args) =>

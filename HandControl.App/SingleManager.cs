@@ -13,6 +13,17 @@ public static class SingleManager
     private static LandmarksModel? _model;
     private static ConversationManager? _conversation;
     private static CursorApi? _cursorApi;
+    private static LoadStatus? _loadStatus;
+
+    public static LoadStatus LoadStatus
+    {
+        get
+        {
+            if (_loadStatus == null) _loadStatus = new LoadStatus();
+            return _loadStatus;
+        }
+    }
+
 
     public static ConversationManager ConversationManager
     {

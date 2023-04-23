@@ -24,20 +24,13 @@
             </Grid>
         </TabItem>
         <TabItem Style="{StaticResource TabItemStyle}" Header="{StaticResource HeaderMovingSettings}">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <app:MoveSettingsControl Grid.Row="0" x:Name="horizontalSettings"/>
-                <app:MoveSettingsControl Grid.Row="1" x:Name="verticalSettings"/>
-            </Grid>
+            <app:MoveSettingsControl Grid.Row="0" x:Name="moveSettings" VerticalAlignment="Top"/>
         </TabItem>
-        <TabItem Style="{StaticResource TabItemStyle}" Header="{StaticResource HeaderScrollingSettings}">
+        <!--<TabItem Style="{StaticResource TabItemStyle}" Header="{StaticResource HeaderScrollingSettings}">
             <StackPanel>
                 <app:ScrollSettingsControl x:Name="scrollSettings"/>
             </StackPanel>
-        </TabItem>
+        </TabItem>-->
         <TabItem Style="{StaticResource TabItemStyle}" Header="{StaticResource HeaderButtonSettings}">
             <StackPanel>
                 <app:MouseButtonSettings x:Name="btnLeftSetting"/>

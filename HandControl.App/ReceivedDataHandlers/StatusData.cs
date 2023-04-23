@@ -7,7 +7,7 @@ public class StatusData
 {
     private StatusState state = StatusState.Stopped;
 
-    public StatusState State 
+    public StatusState State
     {
         get => state;
         set

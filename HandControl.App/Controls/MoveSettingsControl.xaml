@@ -5,16 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:HandControl.App"
              mc:Ignorable="d"
-             Height="350"
              Background="{StaticResource SolidWindowBackground}"
-             Foreground ="{StaticResource SolidWindowForeground}">
+             Foreground ="{StaticResource SolidWindowForeground}"
+             Height="200">
+              
     <GroupBox Style="{StaticResource GroupBoxStyle}" Header="{Binding Title}"  Margin="5 0">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition Height="50px"/>
-                <RowDefinition/>
-                <RowDefinition Height="50px"/>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -22,16 +19,12 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Grid.Column="0" Margin="5"  Text = "{StaticResource TextBlockRemotePoint}"/>
-            <ComboBox  Style="{StaticResource ComboBoxStyle}" Grid.Row="1" Grid.Column="0" Margin="5"  ItemsSource="{Binding Items}" SelectedIndex="{Binding SelectedIndexRemote}"/>
-            <TextBlock Grid.Row="2" Grid.Column="0" Margin="5"  Text = "{StaticResource TextBlockMainPoint}"/>
-            <ComboBox  Style="{StaticResource ComboBoxStyle}" Grid.Row="3" Grid.Column="0" Margin="5"  ItemsSource="{Binding Items}" SelectedIndex="{Binding SelectedIndexMain}"/>
-            <TextBlock Grid.Row="4" Grid.Column="0" Margin="5"  Text = "{StaticResource TextBlockNonSensitiveZone}"/>
-            <Slider    Grid.Row="5" Grid.Column="0" Margin="5"  Minimum="0.1" Maximum="0.5" Value="{Binding NonSensitiveZone}"/>
-            <TextBlock Grid.Row="6" Grid.Column="0" Margin="5"  Text = "{StaticResource TextBlockAcceleration}"/>
-            <Slider    Grid.Row="7" Grid.Column="0" Margin="5"  Minimum="0.1" Maximum="1" Value="{Binding Accelerate}"/>
-            <TextBlock Grid.Row="8" Grid.Column="0" Margin="5"  Text = "{StaticResource TextBlockSpeedLimit}"/>
-            <Slider    Grid.Row="9" Grid.Column="0" Margin="5"  Minimum="10" Maximum="100" Value="{Binding SpeedLimit}"/>
+            <TextBlock Grid.Row="0" Grid.Column="0" Margin="5"  Text = "{StaticResource TextBlockNonSensitiveZone}"/>
+            <Slider    Grid.Row="1" Grid.Column="0" Margin="5"  Minimum="5" Maximum="20" Value="{Binding NonSensitiveZone}"/>
+            <TextBlock Grid.Row="2" Grid.Column="0" Margin="5"  Text = "{StaticResource TextBlockEdgeOffset}"/>
+            <Slider    Grid.Row="3" Grid.Column="0" Margin="5"  Minimum="0.1" Maximum="1.0" Value="{Binding EdgeOffset}"/>
+            <TextBlock Grid.Row="4" Grid.Column="0" Margin="5"  Text = "{StaticResource TextBlockSmoother}"/>
+            <Slider    Grid.Row="5" Grid.Column="0" Margin="5"  Minimum="1" Maximum="10" Value="{Binding Smoother}"/>
         </Grid>
     </GroupBox>
 </UserControl>

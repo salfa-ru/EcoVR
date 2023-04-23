@@ -4,46 +4,35 @@ namespace HandControl.App.Configuration
 {
     public class ControlConfig
     {
-        public float HorizontalNonSensitiveZone 
+        public int NonSensitiveZone 
         { 
-            get => SingleManager.MouseHandController.HorizontalNonSensitiveZone; 
-            set => SingleManager.MouseHandController.HorizontalNonSensitiveZone = value; 
+            get => SingleManager.MouseHandController.NonSensitiveZone; 
+            set => SingleManager.MouseHandController.NonSensitiveZone = value; 
         }
-        public float HorizontalAcseleration
+        public float EdgeOffset
         {
-            get => SingleManager.MouseHandController.HorizontalAcseleration;
-            set => SingleManager.MouseHandController.HorizontalAcseleration = value;
+            get => SingleManager.MouseHandController.EdgeOffset;
+            set => SingleManager.MouseHandController.EdgeOffset = value;
         }
-        public float HorizontalOffset
+
+        public int Smoother
         {
-            get => SingleManager.MouseHandController.HorizontalOffset;
-            set => SingleManager.MouseHandController.HorizontalOffset = value;
+            get => SingleManager.MouseHandController.Smoother;
+            set => SingleManager.MouseHandController.Smoother = value;
         }
-        public float HorizontalLimitSpeed
+
+        public float LeftTriggerHisterezis
         {
-            get => SingleManager.MouseHandController.HorizontalLimitSpeed;
-            set => SingleManager.MouseHandController.HorizontalLimitSpeed = value;
+            get => SingleManager.MouseHandController.LeftTriggerHisterezis;
+            set => SingleManager.MouseHandController.LeftTriggerHisterezis = value;
         }
-        public float VerticalNonSensitiveZone
+
+        public float RightTriggerHisterezis
         {
-            get => SingleManager.MouseHandController.VerticalNonSensitiveZone;
-            set => SingleManager.MouseHandController.VerticalNonSensitiveZone = value;
+            get => SingleManager.MouseHandController.RightTriggerHisterezis;
+            set => SingleManager.MouseHandController.RightTriggerHisterezis = value;
         }
-        public float VerticalOffset
-        {
-            get => SingleManager.MouseHandController.VerticalOffset;
-            set => SingleManager.MouseHandController.VerticalOffset = value;
-        }
-        public float VerticalAcseleration
-        {
-            get => SingleManager.MouseHandController.VerticalAcseleration;
-            set => SingleManager.MouseHandController.VerticalAcseleration = value;
-        }
-        public float VerticalLimitSpeed
-        {
-            get => SingleManager.MouseHandController.VerticalLimitSpeed;
-            set => SingleManager.MouseHandController.VerticalLimitSpeed = value;
-        }
+
         public float ScrollNonsensitiveZone
         {
             get => SingleManager.MouseHandController.ScrollNonsensitiveZone;
@@ -64,37 +53,7 @@ namespace HandControl.App.Configuration
             get => SingleManager.MouseHandController.ScrollLimitSpeed;
             set => SingleManager.MouseHandController.ScrollLimitSpeed = value;
         }
-        public float ActivationLeftMouseZone
-        {
-            get => SingleManager.MouseHandController.ActivationLeftMouseZone;
-            set => SingleManager.MouseHandController.ActivationLeftMouseZone = value;
-        }
-        public float ActivationRightMouseZone
-        {
-            get => SingleManager.MouseHandController.ActivationRightMouseZone;
-            set => SingleManager.MouseHandController.ActivationRightMouseZone = value;
-        }
 
-        public Mark HorizontalRemote
-        {
-            get => SingleManager.MouseHandController.HorizontalRemote;
-            set => SingleManager.MouseHandController.HorizontalRemote = value;
-        }
-        public Mark HorizontalMain
-        {
-            get => SingleManager.MouseHandController.HorizontalMain;
-            set => SingleManager.MouseHandController.HorizontalMain = value;
-        }
-        public Mark VerticalRemote
-        {
-            get => SingleManager.MouseHandController.VerticalRemote;
-            set => SingleManager.MouseHandController.VerticalRemote = value;
-        }
-        public Mark VerticalMain
-        {
-            get => SingleManager.MouseHandController.VerticalMain;
-            set => SingleManager.MouseHandController.VerticalMain = value;
-        }
         public Mark ScrollRemote
         {
             get => SingleManager.MouseHandController.ScrollRemote;

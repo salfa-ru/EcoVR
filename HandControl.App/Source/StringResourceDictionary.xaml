@@ -22,6 +22,8 @@
     <system:String x:Key="TextBlockMainPoint">Базисная точка</system:String>
     <system:String x:Key="TextBlockActivationZone">Зона сработки</system:String>
     <system:String x:Key="TextBlockNonSensitiveZone">Зона не чувствительности</system:String>
+    <system:String x:Key="TextBlockEdgeOffset">Смещение границ</system:String>
+    <system:String x:Key="TextBlockSmoother">Сглаживание</system:String>
     <system:String x:Key="TextBlockAcceleration">Ускорение курсора</system:String>
     <system:String x:Key="TextBlockSpeedLimit">Лимит скорости</system:String>
   
