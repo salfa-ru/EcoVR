@@ -19,11 +19,11 @@
 
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource TextBlockStyle}" Text = "{StaticResource TextBlockRemotePoint}"/>
-            <ComboBox  Grid.Row="1" Grid.Column="0" Style="{StaticResource ComboBoxStyle}"  ItemsSource="{Binding Items}" SelectedIndex="{Binding SelectedIndexTrigger1}"/>
+            <ComboBox  Grid.Row="1" Grid.Column="0" Style="{StaticResource ComboBoxStyle}"  ItemsSource="{Binding ItemsFingers}" SelectedIndex="{Binding SelectedIndexFinger}"/>
             <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource TextBlockStyle}" Text = "{StaticResource TextBlockMainPoint}"/>
-            <ComboBox  Grid.Row="3" Grid.Column="0" Style="{StaticResource ComboBoxStyle}"  ItemsSource="{Binding Items}" SelectedIndex="{Binding SelectedIndexTrigger2}"/>
+            <ComboBox  Grid.Row="3" Grid.Column="0" Style="{StaticResource ComboBoxStyle}"  ItemsSource="{Binding ItemsTargets}" SelectedIndex="{Binding SelectedIndexTarget}"/>
             <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource TextBlockStyle}" Text = "{StaticResource TextBlockActivationZone}"/>
-            <Slider  Grid.Row="5" Grid.Column="0" Minimum="0" Maximum="0.2" Value="0.1"/>
+            <Slider  Grid.Row="5" Grid.Column="0" Minimum="0" Maximum="0.5" Value="{Binding TriggerHisterezis}"/>
         </Grid>
     </GroupBox>
 </UserControl>

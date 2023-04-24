@@ -1,5 +1,7 @@
 ﻿using HandControl.App.Model;
 using System;
+using System.Collections.Generic;
+using System.Windows.Documents;
 
 namespace HandControl.App.ViewModel;
 
@@ -14,76 +16,34 @@ public class ControlPanelLeftButtonSettingsViewModel : ControlPanelBaseViewModel
 
     public float TriggerHisterezis
     {
-        get => SingleManager.MouseHandController.LeftTriggerHisterezis;
+        get => SingleManager.MouseHandController.LeftTrigger.Histerezis;
         set 
         {
-            SingleManager.MouseHandController.LeftTriggerHisterezis = value;
+            SingleManager.MouseHandController.LeftTrigger.Histerezis = value;
             OnPropertyChanged(nameof(TriggerHisterezis));
         }
     }
 
-    public Mark[] Items => (Mark[])Enum.GetValues(typeof(Mark));
+    public List<string> ItemsFingers => SingleManager.MouseHandController.LeftTrigger.Fingers;
+    public List<string> ItemsTargets => SingleManager.MouseHandController.LeftTrigger.TriggerTarget;
 
-    public int SelectedIndexTrigger1
+    public int SelectedIndexFinger
     {
-        get => (int)_controller.LeftButtonTrigger1;
+        get => SingleManager.MouseHandController.LeftTrigger.SelectedFinger;
         set
         {
-            _controller.LeftButtonTrigger1 = (Mark)value;
-            OnPropertyChanged(nameof(SelectedIndexTrigger1));
+            SingleManager.MouseHandController.LeftTrigger.SelectedFinger = value;
+            OnPropertyChanged(nameof(SelectedIndexFinger));
         }
     }
 
-    public int SelectedIndexTrigger2
+    public int SelectedIndexTarget
     {
-        get => (int)_controller.LeftButtonTrigger2;
+        get => SingleManager.MouseHandController.LeftTrigger.SelectedTarget;
         set
         {
-            _controller.LeftButtonTrigger2 = (Mark)value;
-            OnPropertyChanged(nameof(SelectedIndexTrigger2));
-        }
-    }
-}
-
-
-public class ControlPanelRightButtonSettingsViewModel : ControlPanelBaseViewModel
-{
-    MouseHandController _controller = SingleManager.MouseHandController;
-
-    public ControlPanelRightButtonSettingsViewModel()
-    {
-        Title = "Правая кнопка мыши";
-    }
-
-    public float TriggerHisterezis
-    {
-        get => SingleManager.MouseHandController.RightTriggerHisterezis;
-        set
-        {
-            SingleManager.MouseHandController.RightTriggerHisterezis = value;
-            OnPropertyChanged(nameof(TriggerHisterezis));
-        }
-    }
-    public Mark[] Items => (Mark[])Enum.GetValues(typeof(Mark));
-
-    public int SelectedIndexTrigger1
-    {
-        get => (int)_controller.RightButtonTrigger1;
-        set
-        {
-            _controller.RightButtonTrigger1 = (Mark)value;
-            OnPropertyChanged(nameof(SelectedIndexTrigger1));
-        }
-
-    }
-    public int SelectedIndexTrigger2
-    {
-        get => (int)_controller.RightButtonTrigger2;
-        set
-        {
-            _controller.RightButtonTrigger2 = (Mark)value;
-            OnPropertyChanged(nameof(SelectedIndexTrigger2));
+            SingleManager.MouseHandController.LeftTrigger.SelectedTarget = value;
+            OnPropertyChanged(nameof(SelectedIndexTarget));
         }
     }
 }
-

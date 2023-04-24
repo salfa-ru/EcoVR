@@ -21,17 +21,7 @@ namespace HandControl.App.Configuration
             set => SingleManager.MouseHandController.Smoother = value;
         }
 
-        public float LeftTriggerHisterezis
-        {
-            get => SingleManager.MouseHandController.LeftTriggerHisterezis;
-            set => SingleManager.MouseHandController.LeftTriggerHisterezis = value;
-        }
 
-        public float RightTriggerHisterezis
-        {
-            get => SingleManager.MouseHandController.RightTriggerHisterezis;
-            set => SingleManager.MouseHandController.RightTriggerHisterezis = value;
-        }
 
         public float ScrollNonsensitiveZone
         {
@@ -65,25 +55,25 @@ namespace HandControl.App.Configuration
             set => SingleManager.MouseHandController.ScrollMain = value;
         }
 
-        public Mark LeftButtonTrigger1
+        public int LeftButtonFinger
         {
-            get => SingleManager.MouseHandController.LeftButtonTrigger1;
-            set => SingleManager.MouseHandController.LeftButtonTrigger1 = value;
+            get => SingleManager.MouseHandController.LeftTrigger.SelectedFinger;
+            set => SingleManager.MouseHandController.LeftTrigger.SelectedFinger = value;
         }
-        public Mark LeftButtonTrigger2
+        public int LeftButtonTarget
         {
-            get => SingleManager.MouseHandController.LeftButtonTrigger2;
-            set => SingleManager.MouseHandController.LeftButtonTrigger2 = value;
+            get => SingleManager.MouseHandController.LeftTrigger.SelectedTarget;
+            set => SingleManager.MouseHandController.LeftTrigger.SelectedTarget = value;
         }
-        public Mark RightButtonTrigger1
+        public int RightButtonFinger
         {
-            get => SingleManager.MouseHandController.RightButtonTrigger1;
-            set => SingleManager.MouseHandController.RightButtonTrigger1 = value;
+            get => SingleManager.MouseHandController.RightTrigger.SelectedFinger;
+            set => SingleManager.MouseHandController.RightTrigger.SelectedFinger = value;
         }
-        public Mark RightButtonTrigger2
+        public int RightButtonTarget
         {
-            get => SingleManager.MouseHandController.RightButtonTrigger2;
-            set => SingleManager.MouseHandController.RightButtonTrigger2 = value;
+            get => SingleManager.MouseHandController.RightTrigger.SelectedTarget;
+            set => SingleManager.MouseHandController.RightTrigger.SelectedTarget = value;
         }
     }
 }

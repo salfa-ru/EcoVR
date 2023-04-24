@@ -13,8 +13,6 @@ public class MouseHandController
     private const int DELAY = 10;
     private CursorApi _cursor;
     private LandmarksModel _landmarks;
-    private bool mouseLeftDownTrigger = false;
-    private bool mouseRightDownTrigger = false;
     private bool isMoveLeft = false;
     private bool isMoveRight = false;
     private bool isMoveUp = false;
@@ -24,7 +22,7 @@ public class MouseHandController
     private float speedScroll = 0f;
     private bool isScrollUp = false;
     private bool isScrollDown = false;
-   public event EventHandler? OnMouseHandStateChanged;
+    public event EventHandler? OnMouseHandStateChanged;
 
 
     #region scroll
@@ -57,7 +55,6 @@ public class MouseHandController
 
     [Range<float>(0.1F, 1.0F)]
     public float EdgeOffset { get; set; } = 0.8F;
-
 
     [Range<int>(1, 10)]
     public int Smoother { get; set; } = 5;
@@ -104,56 +101,66 @@ public class MouseHandController
 
     #endregion
 
-    #region button
-    public bool MouseLeftDownTrigger
-    {
-        get => mouseLeftDownTrigger;
-        private set
-        {
-            if (mouseLeftDownTrigger != value && IsAngleRight && _landmarks.IsNew)
-            {
-                mouseLeftDownTrigger = value;
-                if (mouseLeftDownTrigger) _cursor.SetMouseLeftDown();
-                else _cursor.SetMouseLeftUp();
-            }
-        }
-    }
-
-    public bool MouseRightDownTrigger
-    {
-        get => mouseRightDownTrigger;
-        private set
-        {
-            if (mouseRightDownTrigger != value && IsAngleRight && _landmarks.IsNew)
-            {
-                mouseRightDownTrigger = value;
-                if (mouseRightDownTrigger) _cursor.SetMouseRightDown();
-                else _cursor.SetMouseRightUp();
-            }
-        }
-    }
-
-    [Range<float>(0.0F, 0.2F)]
-    public float LeftTriggerHisterezis { get; set; } = 0.1F;
-
-    [Range<float>(0.0F, 0.2F)]
-    public float RightTriggerHisterezis { get; set; } = 0.1F;
-    #endregion
+    public ButtonTrigger LeftTrigger { get; }
+    public ButtonTrigger RightTrigger { get; }
 
 
     public MouseHandController()
     {
+        LeftTrigger = new ButtonTrigger();
+        RightTrigger = new ButtonTrigger();
+        
         _cursor = SingleManager.CursorApi;
         _landmarks = SingleManager.LandmarksModel;
         Task.Run(Mover());
+        Task.Run(Trigging());
         Task.Run(Scroller());
         _landmarks.OnDataChanged += (s, a) =>
         {
             IsAngleRight = CheckAngle(_landmarks.IndexMcp.Point, _landmarks.PinkyMcp.Point, _landmarks.Wrist.Point);
-            TriggerLeftMouse();
-            TriggerRightMouse();
             Scrolling();
             OnMouseHandStateChanged?.Invoke(this, EventArgs.Empty);
+        };
+    }
+
+    private Func<Task?> Trigging()
+    {
+        return async () => {
+
+            bool _lastLeft = false; 
+            bool _lastRight = false; 
+            while(true)
+            {
+                await Task.Delay(DELAY);
+                if (!_landmarks.IsNew) continue;
+
+
+                if(_lastLeft != LeftTrigger.Trigger)
+                {
+                    _lastLeft = LeftTrigger.Trigger;
+                    if (_lastLeft)
+                    {
+                        _cursor.SetMouseLeftDown();
+                    }
+                    else
+                    {
+                        _cursor.SetMouseLeftDown();
+                    }
+                }
+
+                if (_lastRight != RightTrigger.Trigger)
+                {
+                    _lastRight = RightTrigger.Trigger;
+                    if (_lastRight)
+                    {
+                        _cursor.SetMouseRightDown();
+                    }
+                    else
+                    {
+                        _cursor.SetMouseRightDown();
+                    }
+                }
+            }
         };
     }
 
@@ -198,7 +205,7 @@ public class MouseHandController
                 }
                 else
                 {
-                    IsMoveDown = IsMoveUp = IsMoveLeft = IsMoveRight = MouseLeftDownTrigger = MouseRightDownTrigger = false;
+                    IsMoveDown = IsMoveUp = IsMoveLeft = IsMoveRight =  false;
                 }
             }
         };
@@ -252,23 +259,7 @@ public class MouseHandController
     public float ControllMeassure => GetDistance(_landmarks.Wrist.Point, _landmarks.IndexMcp.Point);
     public bool IsAngleRight { get; private set; }
 
-    private void TriggerRightMouse()
-    {
-        Landmark? trigger1 = GetLandmark(RightButtonTrigger1);
-        Landmark? trigger2 = GetLandmark(RightButtonTrigger2);
-        if (trigger1 == null || trigger2 == null) return;
-        var dist = trigger2.Point.Y - trigger1.Point.Y;
-        MouseRightDownTrigger = MouseRightDownTrigger ? dist < RightTriggerHisterezis * ControllMeassure : dist < 0;
-    }
 
-    private void TriggerLeftMouse()
-    {                                                              
-        Landmark? trigger1 = GetLandmark(LeftButtonTrigger1);     
-        Landmark? trigger2 = GetLandmark(LeftButtonTrigger2);
-        if (trigger1 == null || trigger2 == null) return;
-        var dist = trigger2.Point.Y - trigger1.Point.Y;
-        MouseLeftDownTrigger = MouseLeftDownTrigger ? dist < LeftTriggerHisterezis * ControllMeassure : dist < 0 ;
-    }
 
     private void Scrolling()
     {
@@ -283,16 +274,6 @@ public class MouseHandController
 
     private Landmark? GetLandmark(Mark mark) => _landmarks.Landmarks.FirstOrDefault(l => l.Mark == mark);
 
-    public Mark HorizontalRemote { get; set; } = Mark.ThumbTip;
-    public Mark HorizontalMain { get; set; } = Mark.ThumbMcp;
-    public Mark VerticalRemote { get; set; } = Mark.MiddleTip;
-    public Mark VerticalMain { get; set; } = Mark.MiddlePip;
     public Mark ScrollRemote { get; set; } = Mark.PinkyTip;
     public Mark ScrollMain { get; set; } = Mark.PinkyPip;
-
-    public Mark LeftButtonTrigger1 { get; set; } = Mark.IndexTip;
-    public Mark LeftButtonTrigger2 { get; set; } = Mark.ThumbTip;
-    public Mark RightButtonTrigger1 { get; set; } = Mark.RingTip;
-    public Mark RightButtonTrigger2 { get; set; } = Mark.ThumbTip;
-
 }
