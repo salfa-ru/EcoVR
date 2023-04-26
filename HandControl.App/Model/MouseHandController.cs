@@ -131,8 +131,11 @@ public class MouseHandController
             bool _lastRight = false; 
             while(true)
             {
-                await Task.Delay(DELAY);
-                if (!_landmarks.IsNew) continue;
+                await Task.Delay(DELAY * 5);
+                if (!_landmarks.IsNew)
+                {
+                    continue;
+                }
 
 
                 if(_lastLeft != LeftTrigger.Trigger)
@@ -144,7 +147,7 @@ public class MouseHandController
                     }
                     else
                     {
-                        _cursor.SetMouseLeftDown();
+                        _cursor.SetMouseLeftUp();
                     }
                 }
 
@@ -157,7 +160,7 @@ public class MouseHandController
                     }
                     else
                     {
-                        _cursor.SetMouseRightDown();
+                        _cursor.SetMouseRightUp();
                     }
                 }
             }
@@ -202,10 +205,6 @@ public class MouseHandController
                 if (IsAngleRight && _landmarks.IsNew && _landmarks.PinkyTip.Point.Y < _landmarks.PinkyMcp.Point.Y)
                 {
                     MouseOneHandMover();
-                }
-                else
-                {
-                    IsMoveDown = IsMoveUp = IsMoveLeft = IsMoveRight =  false;
                 }
             }
         };
