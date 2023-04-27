@@ -19,7 +19,7 @@ namespace HandControl.App
             };
             SingleManager.LoadStatus.StateChange += (sender) =>
             {
-                if (sender.Status.Contains("main.py"))
+                if (sender.Status.Contains("Запуск"))
                     Dispatcher.BeginInvoke(Close);
             };
         }

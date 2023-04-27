@@ -66,7 +66,9 @@ namespace HandControl.App
                 if (_window == null)
                 {
                     _window = new ControlWindow();
-                    _icon.Visible = true;
+                    if(_icon != null)
+                        _icon.Visible = true;
+                    
                 }
 
             }                      

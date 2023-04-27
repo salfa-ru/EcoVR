@@ -6,10 +6,26 @@
         xmlns:local="clr-namespace:HandControl.App"
         mc:Ignorable="d"
         Title="LoadWindow" Height="200" Width="400" HorizontalAlignment="Center" VerticalAlignment="Center" WindowStyle="None" ResizeMode="NoResize">
-    <StackPanel x:Name="stackState">
-        <TextBlock Text="{Binding ProgramTitle}"/>
-        <TextBlock Text="{Binding ProgramDescription}"/>
-        <TextBlock Text="{Binding ProgramRights}"/>
-        <TextBlock Text="{Binding State}"/>
-    </StackPanel>
+
+    <Grid x:Name="stackState">
+
+        <Grid.Background>
+            <ImageBrush ImageSource="/handcontrol.ico" AlignmentX="Right"  Stretch="Uniform"/>
+        </Grid.Background>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Text="Hand Control" FontSize="40" FontFamily="Segoe UI Bold" Margin="10"/>
+        <Image Grid.Row="1"  Margin="15 -30 0 0" Source="/logo.jpg" Width="20" Height="20" HorizontalAlignment="Left"/>
+
+        <TextBlock Grid.Row="1" Text="https://doct24.com/" Margin="45 -15 0 0" FontFamily="Segoe UI Light" Foreground="Blue" TextDecorations="Underline"/>
+        <TextBlock Grid.Row="3" Text="{Binding State}" FontFamily="Segoe UI" />
+
+    </Grid>
+
+
 </Window>

@@ -56,9 +56,17 @@ namespace HandControl.App.ViewModel
             _resolutionConfig = _settings.ResolutionConfig;
             var conversation = SingleManager.ConversationManager;
             Title = "Конфигурация камеры";
-            StartCapturingCommand = new Command((_) => conversation.CommandStart(_resolutionConfig.Index, _resolutionConfig.Width, _resolutionConfig.Height));
-            StopCapturingCommand = new Command((_) => conversation.CommandStop());
-            RestartCapturingCommand = new Command((_) => conversation.CommandCameraSetResolution(_resolutionConfig.Index, _resolutionConfig.Width, _resolutionConfig.Height));
+            StartCapturingCommand = new Command((_) => { 
+                conversation.CommandStart(_resolutionConfig.Index, _resolutionConfig.Width, _resolutionConfig.Height);
+            });
+            StopCapturingCommand = new Command((_) => { 
+                IsSendingData = false;
+                conversation.CommandStop();
+            });
+            RestartCapturingCommand = new Command((_) => { 
+                IsSendingData = false;
+                conversation.CommandCameraSetResolution(_resolutionConfig.Index, _resolutionConfig.Width, _resolutionConfig.Height);
+            });
             _videoDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
             
             SelectedResolution = Find();

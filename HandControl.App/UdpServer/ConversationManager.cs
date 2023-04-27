@@ -74,7 +74,7 @@ public class ConversationManager
                     if (e.Data != null)
                     {
                         SingleManager.LoadStatus.Status = e.Data;
-                        Console.WriteLine(e.Data);
+                        
                     }
                 };
                 cmd.BeginOutputReadLine();
