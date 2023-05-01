@@ -18,8 +18,8 @@
     <system:String x:Key="ButtonApply">Применить</system:String>
     <system:String x:Key="ButtonStop">Остановить</system:String>
 
-    <system:String x:Key="TextBlockRemotePoint">Управляющая точка</system:String>
-    <system:String x:Key="TextBlockMainPoint">Базисная точка</system:String>
+    <system:String x:Key="TextBlockRemotePoint">Управляющий палец</system:String>
+    <system:String x:Key="TextBlockMainPoint">Действие</system:String>
     <system:String x:Key="TextBlockActivationZone">Зона сработки</system:String>
     <system:String x:Key="TextBlockNonSensitiveZone">Зона не чувствительности</system:String>
     <system:String x:Key="TextBlockEdgeOffset">Смещение границ</system:String>

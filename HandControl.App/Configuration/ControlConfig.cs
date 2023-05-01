@@ -21,40 +21,6 @@ namespace HandControl.App.Configuration
             set => SingleManager.MouseHandController.Smoother = value;
         }
 
-
-
-        public float ScrollNonsensitiveZone
-        {
-            get => SingleManager.MouseHandController.ScrollNonsensitiveZone;
-            set => SingleManager.MouseHandController.ScrollNonsensitiveZone = value;
-        }
-        public float ScrollOffset
-        {
-            get => SingleManager.MouseHandController.ScrollOffset;
-            set => SingleManager.MouseHandController.ScrollOffset = value;
-        }
-        public float ScrollAcseleration
-        {
-            get => SingleManager.MouseHandController.ScrollAcseleration;
-            set => SingleManager.MouseHandController.ScrollAcseleration = value;
-        }
-        public float ScrollLimitSpeed
-        {
-            get => SingleManager.MouseHandController.ScrollLimitSpeed;
-            set => SingleManager.MouseHandController.ScrollLimitSpeed = value;
-        }
-
-        public Mark ScrollRemote
-        {
-            get => SingleManager.MouseHandController.ScrollRemote;
-            set => SingleManager.MouseHandController.ScrollRemote = value;
-        }
-        public Mark ScrollMain
-        {
-            get => SingleManager.MouseHandController.ScrollMain;
-            set => SingleManager.MouseHandController.ScrollMain = value;
-        }
-
         public int LeftButtonFinger
         {
             get => SingleManager.MouseHandController.LeftTrigger.SelectedFinger;
@@ -65,6 +31,19 @@ namespace HandControl.App.Configuration
             get => SingleManager.MouseHandController.LeftTrigger.SelectedTarget;
             set => SingleManager.MouseHandController.LeftTrigger.SelectedTarget = value;
         }
+        
+        public float LeftButtonHisterezis
+        {
+            get => SingleManager.MouseHandController.LeftTrigger.Histerezis;
+            set => SingleManager.MouseHandController.LeftTrigger.Histerezis = value;
+        }
+
+        public float RightButtonHisterezis
+        {
+            get => SingleManager.MouseHandController.RightTrigger.Histerezis;
+            set => SingleManager.MouseHandController.RightTrigger.Histerezis = value;
+        }
+
         public int RightButtonFinger
         {
             get => SingleManager.MouseHandController.RightTrigger.SelectedFinger;

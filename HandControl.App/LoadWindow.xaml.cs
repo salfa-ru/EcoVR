@@ -1,27 +1,23 @@
 ﻿using HandControl.App.ViewModel;
 using System.Windows;
 
+namespace HandControl.App;
 
-namespace HandControl.App
+public partial class LoadWindow : Window
 {
-    /// <summary>
-    /// Interaction logic for LoadWindow.xaml
-    /// </summary>
-    public partial class LoadWindow : Window
+    public LoadWindow()
     {
-        public LoadWindow()
+        InitializeComponent();
+
+        stackState.DataContext = new ControlPanelLoadViewModel();
+        Closing += (sender, e) =>
         {
-            InitializeComponent();
-         
-            stackState.DataContext = new ControlPanelLoadViewModel();
-            this.Closing += (sender, e) => {
-                this.DialogResult = true;
-            };
-            SingleManager.LoadStatus.StateChange += (sender) =>
-            {
-                if (sender.Status.Contains("Запуск"))
-                    Dispatcher.BeginInvoke(Close);
-            };
-        }
+            DialogResult = true;
+        };
+        SingleManager.LoadStatus.StateChange += (sender) =>
+        {
+            if (sender.Status.Contains("Запуск"))
+                Dispatcher.BeginInvoke(Close);
+        };
     }
 }

@@ -20,7 +20,7 @@
             </Grid>
             <Grid>
                 <TextBlock Style="{StaticResource TextBlockStyle}" Text="{StaticResource TextBlockOnOffControl}"/>
-                <CheckBox Margin="0 5 55 0" HorizontalAlignment="Right"  IsChecked="{Binding IsSendingData}" IsEnabled="{Binding IsCanEnable}"/>
+                <CheckBox Margin="0 5 55 0" HorizontalAlignment="Right"  IsChecked="{Binding IsSendingData}" IsEnabled="{Binding IsCanDataSending}"/>
             </Grid>
             <Grid>
                 <Grid.ColumnDefinitions>

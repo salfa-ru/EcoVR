@@ -7,8 +7,8 @@
         mc:Ignorable="d"
         Title="MainWindow" Loaded="Window_Loaded" Closed="Window_Closed">
 
-    <Canvas>
-        <Canvas x:Name="canvas" Canvas.Left="{Binding LeftProp}" Canvas.Top ="{Binding TopProp}">
+
+        <!--<Canvas x:Name="canvas" Canvas.Left="{Binding LeftProp}" Canvas.Top ="{Binding TopProp}">
             <Polygon Points="0,90 50,115 50,65" Fill="{Binding IsMoveLeft}"/>
             <Polygon Points="120,115 120,65 170,90" Fill="{Binding IsMoveRight}"/>
             <Polygon Points="60,50 85,0 110,50" Fill="{Binding IsMoveUp}"/>
@@ -28,8 +28,7 @@
                                     IsLargeArc="False"/>
                                 <LineSegment Point="84,60"/>
                                 <LineSegment Point="84,70"/>
-                                <LineSegment Point="74,70"/>
-                                <LineSegment Point="74,115"/>
+                                <LineSegment Point="84,115"/>
                             </PathFigure>
                         </PathGeometry>
                     </GeometryGroup>
@@ -50,28 +49,12 @@
                                     IsLargeArc="False"/>
                                 <LineSegment Point="86,60"/>
                                 <LineSegment Point="86,70"/>
-                                <LineSegment Point="96,70"/>
-                                <LineSegment Point="96,115"/>
+                                <LineSegment Point="86,115"/>
                             </PathFigure>
                         </PathGeometry>
                     </GeometryGroup>
                 </Path.Data>
             </Path>
-            <Path Fill="White">
-                <Path.Data>
-                    <GeometryGroup>
-                        <PathGeometry>
-                            <PathFigure StartPoint="76,72">
+        </Canvas>-->
 
-                                <LineSegment Point="94,72"/>
-                                <LineSegment Point="94,115"/>
-                                <LineSegment Point="76,115"/>
-
-                            </PathFigure>
-                        </PathGeometry>
-                    </GeometryGroup>
-                </Path.Data>
-            </Path>
-        </Canvas>
-    </Canvas>
 </Window>
