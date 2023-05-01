@@ -11,7 +11,7 @@ namespace HandControl.App.Windows
         public ControlWindow()
         {
             InitializeComponent();
-            basicSettings.DataContext = new ControlPanelBasicSettingsViewModel();
+            //basicSettings.DataContext = new ControlPanelBasicSettingsViewModel();
             moveSettings.DataContext = new ControlPanelMovingSettingsViewModel();
             //scrollSettings.DataContext = new ControlPanelScrollSettingsViewModel();
             btnLeftSetting.DataContext = new ControlPanelLeftButtonSettingsViewModel();

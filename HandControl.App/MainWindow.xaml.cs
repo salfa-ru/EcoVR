@@ -19,13 +19,12 @@ public partial class MainWindow : Window
     {
         StartInit();
         InitializeComponent();
-        //canvas.DataContext = new ControlPanelDesktopViewModel();
     }
 
     private void StartInit()
     {
 
-        System.Windows.Forms.ToolStripMenuItem item = new System.Windows.Forms.ToolStripMenuItem("Exit");
+        System.Windows.Forms.ToolStripMenuItem item = new System.Windows.Forms.ToolStripMenuItem("Выход");
         item.Click += (s, e) => this.Close();
 
         _icon = new System.Windows.Forms.NotifyIcon();
@@ -48,8 +47,6 @@ public partial class MainWindow : Window
         this.Topmost = true;
         this.ResizeMode = ResizeMode.NoResize;
         this.Background = new SolidColorBrush(Color.FromArgb(A, R, G, B));
-        this.Left = 0;
-        this.Top = 0;
         this.Width = SingleManager.CursorApi.ScreenWidth;
         this.Height = SingleManager.CursorApi.ScreenHeight;
     }

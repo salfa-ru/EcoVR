@@ -13,11 +13,11 @@ public class ControlPanelDesktopViewModel : ControlPanelBaseViewModel
     public Brush IsMoveRight => _controller?.IsMoveRight == true ? DISABLED : ENABLED;
     public Brush IsMoveUp => _controller?.IsMoveUp == true ? DISABLED : ENABLED;
     public Brush IsMoveDown => _controller?.IsMoveDown == true ? DISABLED : ENABLED;
-    public Brush IsLeftButtonPress => _controller?.LeftTrigger.Trigger == true ? DISABLED : ENABLED;
-    public Brush IsRightButtonPress => _controller?.RightTrigger.Trigger == true ? DISABLED : ENABLED;
+    public Brush IsLeftButtonPress => _controller.LeftTrigger.Trigger ? DISABLED : ENABLED;
+    public Brush IsRightButtonPress => _controller.RightTrigger.Trigger ? DISABLED : ENABLED;
 
-    public double LeftProp { get; set; } = SingleManager.CursorApi.ScreenWidth - 200;
-    public double TopProp { get; set; } = SingleManager.CursorApi.ScreenHeight - 250;
+    public double LeftProp => SingleManager.CursorApi.ScreenWidth - 400;
+    public double TopProp => SingleManager.CursorApi.ScreenHeight - 400;
 
     public ControlPanelDesktopViewModel()
     {

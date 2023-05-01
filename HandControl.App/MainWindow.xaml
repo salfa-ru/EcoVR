@@ -4,31 +4,34 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HandControl.App"
+        xmlns:vm="clr-namespace:HandControl.App.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Loaded="Window_Loaded" Closed="Window_Closed">
-
-
-        <!--<Canvas x:Name="canvas" Canvas.Left="{Binding LeftProp}" Canvas.Top ="{Binding TopProp}">
-            <Polygon Points="0,90 50,115 50,65" Fill="{Binding IsMoveLeft}"/>
-            <Polygon Points="120,115 120,65 170,90" Fill="{Binding IsMoveRight}"/>
-            <Polygon Points="60,50 85,0 110,50" Fill="{Binding IsMoveUp}"/>
-            <Polygon Points="60,130 85,180 110,130" Fill="{Binding IsMoveDown}"/>
+    <Window.DataContext>
+        <vm:ControlPanelDesktopViewModel/>
+    </Window.DataContext>
+    <Canvas>
+        <Canvas x:Name="canvas" Canvas.Left="{Binding Path=LeftProp, Mode=OneWay}" Canvas.Top ="{Binding Path=TopProp, Mode=OneWay}">
+            <Polygon Points="55,55 85,5 115,55" Fill="{Binding IsMoveUp}"/>
+            <Polygon Points="0,95 50,120 50,60" Fill="{Binding IsMoveLeft}"/>
+            <Polygon Points="120,120 120,60 170,90" Fill="{Binding IsMoveRight}"/>
+            <Polygon Points="55,125 85,175 115,125" Fill="{Binding IsMoveDown}"/>
             <Path Fill="{Binding IsLeftButtonPress}">
                 <Path.Data>
                     <GeometryGroup>
                         <PathGeometry>
-                            <PathFigure StartPoint="55,115">
+                            <PathFigure StartPoint="55,120">
                                 <ArcSegment Point="56,70"
-                                    Size="500,500"
-                                    SweepDirection="Clockwise"
-                                    IsLargeArc="False"/>
+                                        Size="500,500"
+                                        SweepDirection="Clockwise"
+                                        IsLargeArc="False"/>
                                 <ArcSegment Point="70,60"
-                                    Size="15,15"
-                                    SweepDirection="Clockwise"
-                                    IsLargeArc="False"/>
+                                        Size="15,15"
+                                        SweepDirection="Clockwise"
+                                        IsLargeArc="False"/>
                                 <LineSegment Point="84,60"/>
                                 <LineSegment Point="84,70"/>
-                                <LineSegment Point="84,115"/>
+                                <LineSegment Point="84,120"/>
                             </PathFigure>
                         </PathGeometry>
                     </GeometryGroup>
@@ -38,23 +41,23 @@
                 <Path.Data>
                     <GeometryGroup>
                         <PathGeometry>
-                            <PathFigure StartPoint="115,115">
+                            <PathFigure StartPoint="115,120">
                                 <ArcSegment Point="114,70"
-                                    Size="500,500"
-                                    SweepDirection="Counterclockwise"
-                                    IsLargeArc="False"/>
+                                        Size="500,500"
+                                        SweepDirection="Counterclockwise"
+                                        IsLargeArc="False"/>
                                 <ArcSegment Point="100,60"
-                                    Size="15,15"
-                                    SweepDirection="Counterclockwise"
-                                    IsLargeArc="False"/>
+                                        Size="15,15"
+                                        SweepDirection="Counterclockwise"
+                                        IsLargeArc="False"/>
                                 <LineSegment Point="86,60"/>
                                 <LineSegment Point="86,70"/>
-                                <LineSegment Point="86,115"/>
+                                <LineSegment Point="86,120"/>
                             </PathFigure>
                         </PathGeometry>
                     </GeometryGroup>
                 </Path.Data>
             </Path>
-        </Canvas>-->
-
+        </Canvas>
+    </Canvas>
 </Window>

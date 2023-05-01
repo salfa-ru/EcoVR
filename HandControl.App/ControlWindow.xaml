@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HandControl.App.Windows" xmlns:app="clr-namespace:HandControl.App"
+        xmlns:vm="clr-namespace:HandControl.App.ViewModel"
         mc:Ignorable="d"
         Title="{StaticResource TitleControlPanel}"
         Width="400"
@@ -20,21 +21,33 @@
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <app:BasicSettingsControl Grid.Row="0" x:Name="basicSettings"/>
+                <app:BasicSettingsControl Grid.Row="0" x:Name="basicSettings">
+                    <app:BasicSettingsControl.DataContext>
+                        <vm:ControlPanelBasicSettingsViewModel/>
+                    </app:BasicSettingsControl.DataContext>
+                </app:BasicSettingsControl>
             </Grid>
         </TabItem>
         <TabItem Style="{StaticResource TabItemStyle}" Header="{StaticResource HeaderMovingSettings}">
-            <app:MoveSettingsControl Grid.Row="0" x:Name="moveSettings" VerticalAlignment="Top"/>
+            <app:MoveSettingsControl Grid.Row="0" x:Name="moveSettings" VerticalAlignment="Top">
+                <app:MoveSettingsControl.DataContext>
+                    <vm:ControlPanelMovingSettingsViewModel/>
+                </app:MoveSettingsControl.DataContext>
+            </app:MoveSettingsControl>
+            
         </TabItem>
-        <!--<TabItem Style="{StaticResource TabItemStyle}" Header="{StaticResource HeaderScrollingSettings}">
-            <StackPanel>
-                <app:ScrollSettingsControl x:Name="scrollSettings"/>
-            </StackPanel>
-        </TabItem>-->
         <TabItem Style="{StaticResource TabItemStyle}" Header="{StaticResource HeaderButtonSettings}">
             <StackPanel>
-                <app:MouseButtonSettings x:Name="btnLeftSetting"/>
-                <app:MouseButtonSettings x:Name="btnRightSetting"/>
+                <app:MouseButtonSettings x:Name="btnLeftSetting">
+                    <app:MouseButtonSettings.DataContext>
+                        <vm:ControlPanelLeftButtonSettingsViewModel/>
+                    </app:MouseButtonSettings.DataContext>
+                </app:MouseButtonSettings>
+                <app:MouseButtonSettings x:Name="btnRightSetting">
+                    <app:MouseButtonSettings.DataContext>
+                        <vm:ControlPanelRightButtonSettingsViewModel/>
+                    </app:MouseButtonSettings.DataContext>
+                </app:MouseButtonSettings>
             </StackPanel>
         </TabItem>
     </TabControl>

@@ -15,7 +15,7 @@ public class ButtonTrigger
 
     public int SelectedFinger { get; set; }
     
-    public int SelectedTarget { get; set; }
+    public int SelectedTarget { get; set; } = -1;
 
     public Landmark LandmarkRemote
     {
@@ -49,12 +49,14 @@ public class ButtonTrigger
 
     private float GetDistance(PointF p1, PointF p2) => (float)Math.Sqrt((p1.X - p2.X) * (p1.X - p2.X) + (p1.Y - p2.Y) * (p1.Y - p2.Y));
 
-    public bool trigger = false;
+    private bool trigger = false;
 
     public bool Trigger
     {
         get
         {
+            if (SelectedTarget == -1) return false;
+            
             bool result = SelectedTarget switch
             {
                 0 => CheckVerticalTriggerLess,
