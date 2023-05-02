@@ -6,11 +6,11 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>True</UseWindowsForms>
-    <ApplicationIcon>handcontrol.ico</ApplicationIcon>
+    <ApplicationIcon>Images\handcontrol.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="handcontrol.ico" />
+    <Content Include="Images\handcontrol.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Controls\ScrollSettingsControl.xaml.cs">
+    <Compile Update="Views\Controls\ScrollSettingsControl.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -153,10 +153,10 @@
     <None Update="detector\venv\share\man\man1\ttx.1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="handcontrol.ico">
+    <None Update="Images\handcontrol.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="logo.jpg">
+    <None Update="Images\logo.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

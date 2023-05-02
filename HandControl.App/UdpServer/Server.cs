@@ -13,7 +13,7 @@ namespace HandControl.App.UdpServer
         public int ReceivePort { get; private set; }
 
         public delegate void DataReceived(Server server, string data);
-        public event DataReceived OnDataReceived;
+        public event DataReceived? OnDataReceived;
 
         private Task? _listener;
 
@@ -36,7 +36,6 @@ namespace HandControl.App.UdpServer
                 {
                     receiveBytes = udpClient.Receive(ref RemoteIpEndPoint);
                     returnData = Encoding.ASCII.GetString(receiveBytes);
-                    //Console.WriteLine($"RECEIVED: {returnData}");        //TODO Logger
                     OnDataReceived?.Invoke(this, returnData);
                 }
             });
@@ -50,7 +49,6 @@ namespace HandControl.App.UdpServer
 
         public void SendTo(string data)
         {
-            //Console.WriteLine($"SENDED: {data}");      //TODO Logger
             UdpClient udpClient = new UdpClient();
             udpClient.Connect(HostName, SendPort);
             byte[] sendBytes = Encoding.ASCII.GetBytes(data);

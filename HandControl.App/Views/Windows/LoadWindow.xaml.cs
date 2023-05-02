@@ -1,7 +1,7 @@
 ﻿using HandControl.App.ViewModel;
 using System.Windows;
 
-namespace HandControl.App;
+namespace HandControl.App.Views.Windows;
 
 public partial class LoadWindow : Window
 {

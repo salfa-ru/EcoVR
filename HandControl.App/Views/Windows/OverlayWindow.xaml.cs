@@ -1,12 +1,12 @@
 ﻿using HandControl.App.Configuration;
-using HandControl.App.Windows;
+using HandControl.App.Views.Windows;
 using System.Windows;
 using System.Windows.Media;
 using HandControl.App.ViewModel;
 
-namespace HandControl.App;
+namespace HandControl.App.Views.Windows;
 
-public partial class MainWindow : Window
+public partial class OverlayWindow : Window
 {
     private const int R = 255;
     private const int G = 255;
@@ -15,7 +15,7 @@ public partial class MainWindow : Window
     private System.Windows.Forms.NotifyIcon? _icon;
     private ControlWindow? _window;
 
-    public MainWindow()
+    public OverlayWindow()
     {
         StartInit();
         InitializeComponent();

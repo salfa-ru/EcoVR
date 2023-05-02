@@ -1,10 +1,7 @@
 ﻿using System.Windows.Controls;
 
-namespace HandControl.App
+namespace HandControl.App.Views.Controls
 {
-    /// <summary>
-    /// Interaction logic for BasicSettingsControl.xaml
-    /// </summary>
     public partial class BasicSettingsControl : UserControl
     {
         public BasicSettingsControl()

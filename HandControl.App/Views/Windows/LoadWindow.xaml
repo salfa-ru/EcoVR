@@ -1,4 +1,4 @@
-﻿<Window x:Class="HandControl.App.LoadWindow"
+﻿<Window x:Class="HandControl.App.Views.Windows.LoadWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -10,7 +10,7 @@
     <Grid x:Name="stackState">
 
         <Grid.Background>
-            <ImageBrush ImageSource="/handcontrol.ico" AlignmentX="Right"  Stretch="Uniform"/>
+            <ImageBrush ImageSource="/Images/handcontrol.ico" AlignmentX="Right"  Stretch="Uniform"/>
         </Grid.Background>
 
         <Grid.RowDefinitions>
@@ -20,7 +20,7 @@
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Text="Hand Control" FontSize="40" FontFamily="Segoe UI Bold" Margin="10"/>
-        <Image Grid.Row="1"  Margin="15 -30 0 0" Source="/logo.jpg" Width="20" Height="20" HorizontalAlignment="Left"/>
+        <Image Grid.Row="1"  Margin="15 -30 0 0" Source="/Images/logo.jpg" Width="20" Height="20" HorizontalAlignment="Left"/>
 
         <TextBlock Grid.Row="1" Text="https://doct24.com/" Margin="45 -15 0 0" FontFamily="Segoe UI Light" Foreground="Blue" TextDecorations="Underline"/>
         <TextBlock Grid.Row="3" Text="{Binding State}" FontFamily="Segoe UI" />

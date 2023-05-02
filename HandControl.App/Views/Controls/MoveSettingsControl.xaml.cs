@@ -1,10 +1,7 @@
 ﻿using System.Windows.Controls;
 
-namespace HandControl.App
+namespace HandControl.App.Views.Controls
 {
-    /// <summary>
-    /// Interaction logic for MoveSettingsControl.xaml
-    /// </summary>
     public partial class MoveSettingsControl : UserControl
     {
         public MoveSettingsControl()

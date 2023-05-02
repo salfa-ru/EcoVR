@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Drawing;
-using System.Threading;
 
 namespace HandControl.App.Model;
 
@@ -33,12 +32,12 @@ public class LandmarksModel
     public Landmark PinkyMcp => GetLandmark(17);
     public Landmark PinkyPip => GetLandmark(18);
     public Landmark PinkyDip => GetLandmark(19);
-    public Landmark PinkyTip => GetLandmark(20); 
+    public Landmark PinkyTip => GetLandmark(20);
     #endregion
 
     private DateTime _lastUpdateTime = DateTime.MinValue;
     public bool IsNew => (DateTime.Now - _lastUpdateTime).TotalMilliseconds < 500;
-    private Landmark GetLandmark(int index) => Landmarks[index];
+    private Landmark GetLandmark(int index) => Landmarks != null && Landmarks.Count >= 21 ? Landmarks[index] : new Landmark(Mark.Wrist, new PointF());
 
     public LandmarksModel()
     {

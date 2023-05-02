@@ -3,7 +3,7 @@
 public class Constants
 {
     public const string SETTINGS_PATH = "settings.json";
-    public const string TRAY_ICON_PATH = "handcontrol.ico";
+    public const string TRAY_ICON_PATH = "Images\\handcontrol.ico";
     public const string PREPARE_PRESENTABLE = "Подготовка к пуску";
     public const string STOPPED_PRESENTABLE = "Остановлен";
     public const string CAPTURED_PRESENTABLE = "Работает";

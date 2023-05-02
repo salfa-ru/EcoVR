@@ -1,9 +1,10 @@
-﻿<Window x:Class="HandControl.App.Windows.ControlWindow"
+﻿<Window x:Class="HandControl.App.Views.Windows.ControlWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:HandControl.App.Windows" xmlns:app="clr-namespace:HandControl.App"
+        xmlns:local="clr-namespace:HandControl.App.Views.Windows" 
+        xmlns:control="clr-namespace:HandControl.App.Views.Controls"
         xmlns:vm="clr-namespace:HandControl.App.ViewModel"
         mc:Ignorable="d"
         Title="{StaticResource TitleControlPanel}"
@@ -16,39 +17,34 @@
         Foreground ="{StaticResource SolidWindowForeground}">
     <TabControl Margin="5" Style="{StaticResource TabControlStyle}">
         <TabItem Style="{StaticResource TabItemStyle}" Header="{StaticResource HeaderMainSettings}">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <app:BasicSettingsControl Grid.Row="0" x:Name="basicSettings">
-                    <app:BasicSettingsControl.DataContext>
-                        <vm:ControlPanelBasicSettingsViewModel/>
-                    </app:BasicSettingsControl.DataContext>
-                </app:BasicSettingsControl>
-            </Grid>
+            <control:BasicSettingsControl>
+                <control:BasicSettingsControl.DataContext>
+                    <vm:ControlPanelBasicSettingsViewModel/>
+                </control:BasicSettingsControl.DataContext>
+            </control:BasicSettingsControl>
         </TabItem>
         <TabItem Style="{StaticResource TabItemStyle}" Header="{StaticResource HeaderMovingSettings}">
-            <app:MoveSettingsControl Grid.Row="0" x:Name="moveSettings" VerticalAlignment="Top">
-                <app:MoveSettingsControl.DataContext>
+            <control:MoveSettingsControl>
+                <control:MoveSettingsControl.DataContext>
                     <vm:ControlPanelMovingSettingsViewModel/>
-                </app:MoveSettingsControl.DataContext>
-            </app:MoveSettingsControl>
-            
+                </control:MoveSettingsControl.DataContext>
+            </control:MoveSettingsControl>
         </TabItem>
         <TabItem Style="{StaticResource TabItemStyle}" Header="{StaticResource HeaderButtonSettings}">
+
             <StackPanel>
-                <app:MouseButtonSettings x:Name="btnLeftSetting">
-                    <app:MouseButtonSettings.DataContext>
+                <control:MouseButtonSettings>
+                    <control:MouseButtonSettings.DataContext>
                         <vm:ControlPanelLeftButtonSettingsViewModel/>
-                    </app:MouseButtonSettings.DataContext>
-                </app:MouseButtonSettings>
-                <app:MouseButtonSettings x:Name="btnRightSetting">
-                    <app:MouseButtonSettings.DataContext>
+                    </control:MouseButtonSettings.DataContext>
+                </control:MouseButtonSettings>
+                <control:MouseButtonSettings>
+                    <control:MouseButtonSettings.DataContext>
                         <vm:ControlPanelRightButtonSettingsViewModel/>
-                    </app:MouseButtonSettings.DataContext>
-                </app:MouseButtonSettings>
+                    </control:MouseButtonSettings.DataContext>
+                </control:MouseButtonSettings>
             </StackPanel>
+         
         </TabItem>
     </TabControl>
 </Window>
