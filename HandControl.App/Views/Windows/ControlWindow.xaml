@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         Title="{StaticResource TitleControlPanel}"
         Width="400"
-        Height="800"
+        Height="auto"
         ResizeMode="NoResize"
         Closing="Window_Closing"
         WindowStyle="ToolWindow" 
@@ -24,11 +24,13 @@
             </control:BasicSettingsControl>
         </TabItem>
         <TabItem Style="{StaticResource TabItemStyle}" Header="{StaticResource HeaderMovingSettings}">
-            <control:MoveSettingsControl>
-                <control:MoveSettingsControl.DataContext>
-                    <vm:ControlPanelMovingSettingsViewModel/>
-                </control:MoveSettingsControl.DataContext>
-            </control:MoveSettingsControl>
+            <StackPanel>
+                <control:MoveSettingsControl>
+                    <control:MoveSettingsControl.DataContext>
+                        <vm:ControlPanelMovingSettingsViewModel/>
+                    </control:MoveSettingsControl.DataContext>
+                </control:MoveSettingsControl>
+            </StackPanel>
         </TabItem>
         <TabItem Style="{StaticResource TabItemStyle}" Header="{StaticResource HeaderButtonSettings}">
 

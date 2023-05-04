@@ -1,4 +1,5 @@
 ﻿using HandControl.App.Defaults;
+using HandControl.App.Loger;
 using Newtonsoft.Json;
 using System.Drawing;
 
@@ -24,60 +25,80 @@ public class DataParser
 
     private void ParseData(string data)
     {
-        var definition = new { 
-            resolution = new { index = 0, width = 0, height = 0 }, 
-            detection = new { 
-                preview = false, 
-                detect = false, 
-                flip = false, 
-                data = new {
-                    lmlist = new int[0][], 
-                    bbox= new int[0], 
-                    center = new int[0], 
-                    type = string.Empty } } };
-        var deserialized = JsonConvert.DeserializeAnonymousType(data, definition);
-        if (deserialized != null)
+        try
         {
-            FrameData frame = new FrameData()
+            var definition = new
             {
-                Width = deserialized.resolution.width,
-                Height = deserialized.resolution.height,
-                IsFlip = deserialized.detection.flip
+                resolution = new { index = 0, width = 0, height = 0 },
+                detection = new
+                {
+                    preview = false,
+                    detect = false,
+                    flip = false,
+                    data = new
+                    {
+                        lmlist = new int[0][],
+                        bbox = new int[0],
+                        center = new int[0],
+                        type = string.Empty
+                    }
+                }
             };
-            RectangleF rect = new RectangleF(
-                new PointF(
-                    deserialized.detection.data.bbox[0],
-                    deserialized.detection.data.bbox[1]),
-                new SizeF(
-                    deserialized.detection.data.bbox[2],
-                    deserialized.detection.data.bbox[3]));
-            PointF center = new PointF(
-                deserialized.detection.data.center[0],
-                deserialized.detection.data.center[1]);
-            HandType handType = deserialized.detection.data.type == LEFT && deserialized.detection.flip
-                || deserialized.detection.data.type == RIGHT && !deserialized.detection.flip
-                ? HandType.Right : HandType.Left;
-            HandData hand = new HandData() { Box = rect, Center = center, Type = handType };
-            hand.AddPoints(deserialized.detection.data.lmlist);
+            var deserialized = JsonConvert.DeserializeAnonymousType(data, definition);
+            if (deserialized != null)
+            {
+                FrameData frame = new FrameData()
+                {
+                    Width = deserialized.resolution.width,
+                    Height = deserialized.resolution.height,
+                    IsFlip = deserialized.detection.flip
+                };
+                RectangleF rect = new RectangleF(
+                    new PointF(
+                        deserialized.detection.data.bbox[0],
+                        deserialized.detection.data.bbox[1]),
+                    new SizeF(
+                        deserialized.detection.data.bbox[2],
+                        deserialized.detection.data.bbox[3]));
+                PointF center = new PointF(
+                    deserialized.detection.data.center[0],
+                    deserialized.detection.data.center[1]);
+                HandType handType = deserialized.detection.data.type == LEFT && deserialized.detection.flip
+                    || deserialized.detection.data.type == RIGHT && !deserialized.detection.flip
+                    ? HandType.Right : HandType.Left;
+                HandData hand = new HandData() { Box = rect, Center = center, Type = handType };
+                hand.AddPoints(deserialized.detection.data.lmlist);
 
-            SingleManager.LandmarksData.Frame = frame;
-            SingleManager.LandmarksData.Hand = hand;
+                SingleManager.LandmarksData.Frame = frame;
+                SingleManager.LandmarksData.Hand = hand;
+            }
+        }
+        catch (System.Exception err)
+        {
+            ErrorLoger.Log(err.Message);
         }
     }
 
     private void ParseStatus(string data)
     {
-        var definition = new { status = string.Empty};
-        var deserialized = JsonConvert.DeserializeAnonymousType(data, definition);
-        if (deserialized != null) 
+        try
         {
-            _status.State = deserialized.status switch
+            var definition = new { status = string.Empty };
+            var deserialized = JsonConvert.DeserializeAnonymousType(data, definition);
+            if (deserialized != null)
             {
-                Constants.PREPARE => StatusState.Prepare,
-                Constants.STOPPED => StatusState.Stopped,
-                Constants.CAPTURED => StatusState.Captured,
-                _ => StatusState.Error
-            };
+                _status.State = deserialized.status switch
+                {
+                    Constants.PREPARE => StatusState.Prepare,
+                    Constants.STOPPED => StatusState.Stopped,
+                    Constants.CAPTURED => StatusState.Captured,
+                    _ => StatusState.Error
+                };
+            }
+        }
+        catch (System.Exception err)
+        {
+            ErrorLoger.Log(err.Message);
         }
     }
 }

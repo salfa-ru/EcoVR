@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using HandControl.App.Loger;
 using Newtonsoft.Json;
 
 
@@ -16,14 +17,22 @@ namespace HandControl.App.Configuration
 
         public FrameConfig FrameConfig { get; set; } = null!;
         public ControlConfig ControlConfig { get; set; } = null!;
-
+        
+        private static Settings _instance = null!;
+        
         public static void Save() 
         {
-            var json = JsonConvert.SerializeObject(_instance);
-            File.WriteAllText(_path, json.ToString());
+            try
+            {
+                var json = JsonConvert.SerializeObject(Instance);
+                File.WriteAllText(_path, json.ToString());
+            }
+            catch (System.Exception err)
+            {
+                ErrorLoger.Log(err.Message);
+            }
         }
-
-        private static Settings _instance = null!;
+         
         
         public static Settings Instance
         {

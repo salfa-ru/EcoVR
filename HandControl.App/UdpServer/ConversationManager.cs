@@ -1,4 +1,5 @@
 ﻿using HandControl.App.Configuration;
+using HandControl.App.Loger;
 using HandControl.App.ReceivedDataHandlers;
 using Newtonsoft.Json;
 using System;
@@ -60,41 +61,49 @@ public class ConversationManager
 
         static void StartScriptEnvironment()
         {
-            ProcessStartInfo psi = new ProcessStartInfo("cmd.exe");
-            psi.RedirectStandardInput = true;
-            psi.RedirectStandardOutput = true;
-            psi.UseShellExecute = false;
-            psi.CreateNoWindow = true;
-
-            Process? cmd = Process.Start(psi);
-            if (cmd != null)
+            try
             {
-                cmd.OutputDataReceived += (s, e) =>
+                ProcessStartInfo psi = new ProcessStartInfo("cmd.exe");
+                psi.RedirectStandardInput = true;
+                psi.RedirectStandardOutput = true;
+                psi.UseShellExecute = false;
+                psi.CreateNoWindow = true;
+
+                Process? cmd = Process.Start(psi);
+                if (cmd != null)
                 {
-                    if (e.Data != null)
+                    cmd.OutputDataReceived += (s, e) =>
                     {
-                        SingleManager.LoadStatus.Status = e.Data;
-                        
+                        if (e.Data != null)
+                        {
+                            SingleManager.LoadStatus.Status = e.Data;
+
+                        }
+                    };
+                    cmd.BeginOutputReadLine();
+                    cmd.StandardInput.WriteLine("cd detector");
+                    if (!Directory.Exists("detector\\myenv"))
+                    {
+                        cmd.StandardInput.WriteLine("start /WAIT /B ./python310/python.exe ./python310/get-pip.py");
+                        cmd.StandardInput.WriteLine("start /WAIT /B ./python310/python.exe -m pip install virtualenv");
+                        cmd.StandardInput.WriteLine("start /WAIT /B ./python310/python.exe -m virtualenv myenv");
+                        cmd.StandardInput.WriteLine("call ./myenv/Scripts/activate.bat");
+                        cmd.StandardInput.WriteLine("python --version");
+                        cmd.StandardInput.WriteLine("pip install opencv-python");
+                        cmd.StandardInput.WriteLine("pip install cvzone");
+                        cmd.StandardInput.WriteLine("pip install mediapipe");
+                        cmd.StandardInput.WriteLine("call ./myenv/Scripts/deactivate.bat");
                     }
-                };
-                cmd.BeginOutputReadLine();
-                cmd.StandardInput.WriteLine("cd detector");
-                if (!Directory.Exists("detector\\myenv"))
-                {
-                    cmd.StandardInput.WriteLine("start /WAIT /B ./python310/python.exe ./python310/get-pip.py");
-                    cmd.StandardInput.WriteLine("start /WAIT /B ./python310/python.exe -m pip install virtualenv");
-                    cmd.StandardInput.WriteLine("start /WAIT /B ./python310/python.exe -m virtualenv myenv");
                     cmd.StandardInput.WriteLine("call ./myenv/Scripts/activate.bat");
                     cmd.StandardInput.WriteLine("python --version");
-                    cmd.StandardInput.WriteLine("pip install opencv-python");
-                    cmd.StandardInput.WriteLine("pip install cvzone");
-                    cmd.StandardInput.WriteLine("pip install mediapipe");
-                    cmd.StandardInput.WriteLine("call ./myenv/Scripts/deactivate.bat");
+                    cmd.StandardInput.WriteLine("python main.py 6000 6001");
+                    cmd.WaitForExit();
                 }
-                cmd.StandardInput.WriteLine("call ./myenv/Scripts/activate.bat");
-                cmd.StandardInput.WriteLine("python --version");
-                cmd.StandardInput.WriteLine("python main.py 6000 6001");
-                cmd.WaitForExit();
+            }
+            catch (Exception err)
+            {
+
+                ErrorLoger.Log(err.Message);
             }
         }
     }

@@ -49,6 +49,7 @@ public partial class OverlayWindow : Window
         this.Background = new SolidColorBrush(Color.FromArgb(A, R, G, B));
         this.Width = SingleManager.CursorApi.ScreenWidth;
         this.Height = SingleManager.CursorApi.ScreenHeight;
+        this.WindowState = WindowState.Maximized;
     }
 
     private void Window_Loaded(object sender, RoutedEventArgs e)
